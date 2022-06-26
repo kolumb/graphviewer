@@ -11,8 +11,8 @@ const camera = Screen.center.flip()
 let zoom = 1
 const nodes = []
 for (let i = 0; i < 10; i++) {
-	const label = new Array(10).fill(0).map(_ => String.fromCharCode(60 + Math.floor(Math.random() * 60))).join("")
-	nodes.push(new Node(Vector.random().scale(100*(1 -Math.random()**2)), label))
+	const label = new Array(Math.floor(Math.random() * 20 + 6)).fill(0).map(_ => String.fromCharCode(60 + Math.floor(Math.random() * 60))).join("")
+	nodes.push(new Node(Vector.random().scale(400*(1 -Math.random()**2)), label))
 }
 
 frame();

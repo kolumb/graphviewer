@@ -14,6 +14,8 @@ class Input {
         Input.downState = true;
     }
     static pointermoveHandler(e) {
+        const newPos = new Vector(e.offsetX, e.offsetY)
+        Input.speed = newPos.sub(Input.pointer)
         Input.pointer.set(e.offsetX, e.offsetY);
     }
     static pointerupHandler(e) {

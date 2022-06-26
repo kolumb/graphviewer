@@ -16,6 +16,10 @@ function tick(lag) {
     if (Input.down) {
         camera.y += cameraSpeed
     }
+    if (Input.downState) {
+        camera.subMut(Input.speed)
+        Input.speed.set(0, 0)
+    }
 }
 function render() {
     Ctx.fillStyle(pause ? "rgb(200,200,200)" : "rgb(240,240,240)");

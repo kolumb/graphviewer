@@ -30,6 +30,8 @@ function render() {
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
+    nodes.forEach(node => node.render())
+
     Ctx.restore()
 }
 

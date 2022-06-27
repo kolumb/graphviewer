@@ -23,3 +23,4 @@ canvas.addEventListener(EVENT.pointermove, Input.pointermoveHandler);
 window.addEventListener(EVENT.pointerup, Input.pointerupHandler);
 window.addEventListener(EVENT.keydown, Input.keydownHandler);
 window.addEventListener(EVENT.keyup, Input.keyupHandler);
+window.addEventListener(EVENT.wheel, Input.wheelHandler);

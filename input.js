@@ -8,6 +8,7 @@ class Input {
     static pointer = new Vector();
     static speed = new Vector();
     static downState = false;
+    static zoom = 0;
 
     static pointerdownHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY); // e.clientY - canvas.offsetTop
@@ -70,6 +71,16 @@ class Input {
                 Input.right = false;
                 break;
         }
+    }
+
+    static wheelHandler(e) {
+        Input.zoom += e.deltaY
+        const zoom = 10 ** (Input.zoom / 2000)
+        // if (e.deltaY > 0) {
+        //     camera.addMut(Input.pointer.sub(Screen.center).scale(1 / zoom))
+        // } else {
+        //     camera.subMut(Input.pointer.sub(Screen.center).scale(1 / zoom))
+        // }
     }
 }
 
@@ -142,3 +153,14 @@ for (let i = 0; i < 10; i++) {
 for (let i = 1; i <= 12; i++) {
     KEY[`f${i}`] = `F${i}`;
 }
+
+const EVENT = Enum([
+    "resize",
+    "pointerdown",
+    "pointermove",
+    "pointerup",
+    "keydown",
+    "keyup",
+    "click",
+    "wheel",
+]);

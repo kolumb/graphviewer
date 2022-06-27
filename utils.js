@@ -17,16 +17,6 @@ function Enum(list) {
     );
 }
 
-const EVENT = Enum([
-    "resize",
-    "pointerdown",
-    "pointermove",
-    "pointerup",
-    "keydown",
-    "keyup",
-    "click",
-]);
-
 function mod(n, limit) {
     return ((n % limit) + limit) % limit;
 }

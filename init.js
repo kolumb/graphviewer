@@ -8,6 +8,7 @@ let lastFrameTime = 0;
 Screen.updateSize();
 
 const camera = Screen.center.flip()
+const cameraShift = new Vector()
 let zoom = 1
 const nodes = []
 for (let i = 0; i < 10; i++) {

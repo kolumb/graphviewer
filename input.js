@@ -6,22 +6,24 @@ class Input {
     static left = false;
     static right = false;
     static pointer = new Vector();
-    static speed = new Vector();
     static downState = false;
     static zoom = 0;
+    static downPos = new Vector()
 
     static pointerdownHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY); // e.clientY - canvas.offsetTop
         Input.downState = true;
+        Input.downPos.set(e.offsetX, e.offsetY)
     }
     static pointermoveHandler(e) {
         const newPos = new Vector(e.offsetX, e.offsetY)
-        Input.speed = newPos.sub(Input.pointer)
         Input.pointer.set(e.offsetX, e.offsetY);
     }
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
+        camera.setFrom(camera.add(cameraShift))
+        cameraShift.setFrom(Vector.zero)
     }
 
     static keydownHandler(e) {
@@ -83,6 +85,17 @@ class Input {
         // }
     }
 }
+
+const EVENT = Enum([
+    "resize",
+    "pointerdown",
+    "pointermove",
+    "pointerup",
+    "keydown",
+    "keyup",
+    "click",
+    "wheel",
+]);
 
 const KEY = {
     space: "Space",
@@ -153,14 +166,3 @@ for (let i = 0; i < 10; i++) {
 for (let i = 1; i <= 12; i++) {
     KEY[`f${i}`] = `F${i}`;
 }
-
-const EVENT = Enum([
-    "resize",
-    "pointerdown",
-    "pointermove",
-    "pointerup",
-    "keydown",
-    "keyup",
-    "click",
-    "wheel",
-]);

@@ -3,6 +3,7 @@ const TARGET_FPS = 60;
 const SECOND = 1000;
 
 const cameraSpeed = 10
+const previousCamera = new Vector()
 function tick(lag) {
     if (Input.left) {
         camera.x -= cameraSpeed
@@ -17,8 +18,7 @@ function tick(lag) {
         camera.y += cameraSpeed
     }
     if (Input.downState) {
-        camera.subMut(Input.speed)
-        Input.speed.set(0, 0)
+        cameraShift.setFrom(Input.downPos.sub(Input.pointer))
     }
 }
 function render() {
@@ -27,7 +27,7 @@ function render() {
     Ctx.save()
 
     const scale = 10 ** (Input.zoom / 2000)
-    Ctx.translate(camera.flip())
+    Ctx.translate(camera.add(cameraShift).flip())
     Ctx.scale(new Vector(scale, scale))
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))

@@ -76,13 +76,10 @@ class Input {
     }
 
     static wheelHandler(e) {
+        const oldScale = 10 ** (Input.zoom / 2000)
         Input.zoom += e.deltaY
-        const zoom = 10 ** (Input.zoom / 2000)
-        // if (e.deltaY > 0) {
-        //     camera.addMut(Input.pointer.sub(Screen.center).scale(1 / zoom))
-        // } else {
-        //     camera.subMut(Input.pointer.sub(Screen.center).scale(1 / zoom))
-        // }
+        const newScale = 10 ** (Input.zoom / 2000)
+        camera.addMut(camera.add(Input.pointer).scale(1 / oldScale).scale(newScale-oldScale))
     }
 }
 

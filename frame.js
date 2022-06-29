@@ -17,8 +17,39 @@ function tick(lag) {
     if (Input.down) {
         camera.y += cameraSpeed
     }
-    if (Input.downState) {
+    if (Input.downState && !hoveredNode) {
         cameraShift.setFrom(Input.downPos.sub(Input.pointer))
+    }
+    if (!Input.downState) hoveredNode = null
+    nodes.reverse().forEach(node => node.update())
+    nodes.reverse()
+    if (Input.downState) {
+        if (hoveredNode) {
+            hoveredNode.pos.setFrom(cursor.add(hoveredNodeShift))
+            if (!canvas.classList.contains("dragging")) {
+                canvas.classList.add("dragging")
+            }
+        } else {
+            if (canvas.classList.contains("dragging")) {
+                canvas.classList.remove("dragging")
+            }
+            if (!canvas.classList.contains("moving")) {
+                canvas.classList.add("moving")
+            }
+        }
+    } else {
+        if (hoveredNode) {
+            if (!canvas.classList.contains("hovering")) {
+                canvas.classList.add("hovering")
+            }
+        } else {
+            if (canvas.classList.contains("hovering")) {
+                canvas.classList.remove("hovering")
+            }
+            if (canvas.classList.contains("moving")) {
+                canvas.classList.remove("moving")
+            }
+        }
     }
 }
 function render() {
@@ -33,6 +64,7 @@ function render() {
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
     nodes.forEach(node => node.render())
+    Ctx.fillRect(cursor, new Vector(10, 10))
 
     Ctx.restore()
 }

@@ -13,17 +13,31 @@ class Input {
     static pointerdownHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY); // e.clientY - canvas.offsetTop
         Input.downState = true;
-        Input.downPos.set(e.offsetX, e.offsetY)
+        if (hoveredNode) {
+            const scale = 10 ** (Input.zoom / 2000)
+            hoveredNodeShift.setFrom(hoveredNode.pos.sub(camera.add(Input.pointer).scale(1 / scale)))
+        } else {
+            Input.downPos.setFrom(Input.pointer)
+        }
     }
     static pointermoveHandler(e) {
         const newPos = new Vector(e.offsetX, e.offsetY)
         Input.pointer.set(e.offsetX, e.offsetY);
+        const scale = 10 ** (Input.zoom / 2000)
+        cursor.setFrom(camera.add(cameraShift).add(Input.pointer).scale(1 / scale))
     }
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
-        camera.setFrom(camera.add(cameraShift))
-        cameraShift.setFrom(Vector.zero)
+        if (canvas.classList.contains("dragging")) {
+            canvas.classList.remove("dragging")
+        }
+        if (hoveredNode) {
+            hoveredNode.pos.setFrom(cursor.add(hoveredNodeShift))
+        } else {
+            camera.setFrom(camera.add(cameraShift))
+            cameraShift.setFrom(Vector.zero)
+        }
     }
 
     static keydownHandler(e) {

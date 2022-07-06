@@ -6,6 +6,16 @@ class Node {
 		this.label = label
 		this.textWidth = Ctx.measureText(label).width
 	}
+	static serialize(nodes) {
+		let result = "strict graph {\n"
+		result += nodes.map((node, i) => {
+			const x = String(node.pos.x.toFixed(0)).padStart(5, " ")
+			const y = String(node.pos.y.toFixed(0)).padStart(5, " ")
+			return `    node${i} [x=${x}, y=${y}, label="${node.label.replaceAll("\"", "\\\"")}"]`
+		}).join(";\n")
+		return result + "\n}\n"
+	}
+
 	update() {
 		this.color = "black"
 		const cursorDist = this.pos.sub(cursor)

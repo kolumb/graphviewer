@@ -95,6 +95,11 @@ class Input {
         const newScale = 10 ** (Input.zoom / 2000)
         camera.addMut(camera.add(Input.pointer).scale(1 / oldScale).scale(newScale-oldScale))
     }
+
+    static copyHandler(e) {
+        e.clipboardData.setData("text/plain", Node.serialize(nodes))
+        e.preventDefault()
+    }
 }
 
 const EVENT = Enum([
@@ -106,6 +111,8 @@ const EVENT = Enum([
     "keyup",
     "click",
     "wheel",
+    "copy",
+    "paste",
 ]);
 
 const KEY = {

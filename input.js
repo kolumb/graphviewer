@@ -100,6 +100,13 @@ class Input {
         e.clipboardData.setData("text/plain", Node.serialize(nodes))
         e.preventDefault()
     }
+
+    static pasteHandler(e) {
+        e.preventDefault()
+        const text = (e.clipboardData || window.clipboardData)?.getData("text")
+        Node.deserialize(text.trim())
+        if (pause) render()
+    }
 }
 
 const EVENT = Enum([

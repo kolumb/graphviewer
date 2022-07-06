@@ -29,3 +29,4 @@ window.addEventListener(EVENT.keydown, Input.keydownHandler);
 window.addEventListener(EVENT.keyup, Input.keyupHandler);
 window.addEventListener(EVENT.wheel, Input.wheelHandler);
 window.addEventListener(EVENT.copy, Input.copyHandler);
+window.addEventListener(EVENT.paste, Input.pasteHandler);

@@ -90,6 +90,7 @@ class Input {
     }
 
     static wheelHandler(e) {
+        if (pause) return;
         const oldScale = 10 ** (Input.zoom / 2000)
         Input.zoom += e.deltaY
         const newScale = 10 ** (Input.zoom / 2000)

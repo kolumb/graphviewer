@@ -63,6 +63,7 @@ function render() {
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
+    edges.forEach(edge => edge.render())
     nodes.forEach(node => node.render())
     Ctx.fillRect(cursor, new Vector(10, 10))
 

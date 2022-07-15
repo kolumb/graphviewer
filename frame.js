@@ -17,25 +17,30 @@ function tick(lag) {
     if (Input.down) {
         camera.y += cameraSpeed
     }
-    if (Input.downState && !hoveredNode) {
-        cameraShift.setFrom(Input.downPos.sub(Input.pointer))
-    }
-    if (!Input.downState) hoveredNode = null
-    nodes.reverse().forEach(node => node.update())
-    nodes.reverse()
-    if (Input.downState) {
+    hoveredNode = null
+    nodes.forEach(node => node.update())
+
+    if (!lastClickHandled) {
+        lastClickHandled = true
         if (hoveredNode) {
-            hoveredNode.pos.setFrom(cursor.add(hoveredNodeShift))
-            if (!canvas.classList.contains("dragging")) {
+            if (!selectedNode) {
+                selectedNode = hoveredNode
+                selectedNode.color = "blue"
                 canvas.classList.add("dragging")
             }
         } else {
-            if (canvas.classList.contains("dragging")) {
-                canvas.classList.remove("dragging")
+            if (selectedNode) {
+                selectedNode.color = "orange"
+                selectedNode = null
             }
-            if (!canvas.classList.contains("moving")) {
-                canvas.classList.add("moving")
-            }
+            canvas.classList.add("moving")
+        }
+    }
+    if (Input.downState) {
+        if (selectedNode) {
+            selectedNode.pos.setFrom(cursor.add(hoveredNodeShift))
+        } else {
+            cameraShift.setFrom(Input.downPos.sub(Input.pointer))
         }
     } else {
         if (hoveredNode) {
@@ -46,11 +51,41 @@ function tick(lag) {
             if (canvas.classList.contains("hovering")) {
                 canvas.classList.remove("hovering")
             }
-            if (canvas.classList.contains("moving")) {
-                canvas.classList.remove("moving")
-            }
         }
     }
+
+
+    // if (Input.downState && !hoveredNode) {
+    //     cameraShift.setFrom(Input.downPos.sub(Input.pointer))
+    // }
+    // if (Input.downState) {
+    //     if (hoveredNode) {
+    //         hoveredNode.pos.setFrom(cursor.add(hoveredNodeShift))
+    //         if (!canvas.classList.contains("dragging")) {
+    //             canvas.classList.add("dragging")
+    //         }
+    //     } else {
+    //         if (canvas.classList.contains("dragging")) {
+    //             canvas.classList.remove("dragging")
+    //         }
+    //         if (!canvas.classList.contains("moving")) {
+    //             canvas.classList.add("moving")
+    //         }
+    //     }
+    // } else {
+    //     if (hoveredNode) {
+    //         if (!canvas.classList.contains("hovering")) {
+    //             canvas.classList.add("hovering")
+    //         }
+    //     } else {
+    //         if (canvas.classList.contains("hovering")) {
+    //             canvas.classList.remove("hovering")
+    //         }
+    //         if (canvas.classList.contains("moving")) {
+    //             canvas.classList.remove("moving")
+    //         }
+    //     }
+    // }
 }
 function render() {
     Ctx.fillStyle(pause ? "rgb(200,200,200)" : "rgb(240,240,240)");

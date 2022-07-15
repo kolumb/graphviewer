@@ -19,6 +19,7 @@ class Input {
         } else {
             Input.downPos.setFrom(Input.pointer)
         }
+        lastClickHandled = false
     }
     static pointermoveHandler(e) {
         const newPos = new Vector(e.offsetX, e.offsetY)
@@ -29,14 +30,18 @@ class Input {
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
-        if (canvas.classList.contains("dragging")) {
+        // if (canvas.classList.contains("dragging")) {
+        //     canvas.classList.remove("dragging")
+        // }
+        if (selectedNode) {
+            // selectedNode.pos.setFrom(cursor.add(hoveredNodeShift))
+            selectedNode.color = "black"
+            selectedNode = null
             canvas.classList.remove("dragging")
-        }
-        if (hoveredNode) {
-            hoveredNode.pos.setFrom(cursor.add(hoveredNodeShift))
         } else {
             camera.setFrom(camera.add(cameraShift))
             cameraShift.setFrom(Vector.zero)
+            canvas.classList.remove("moving")
         }
     }
 

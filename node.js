@@ -8,6 +8,7 @@ class Node {
 		this.label = label
 		this.textWidth = Ctx.measureText(label).width
 	}
+	// TODO: Because both Node and Edge need serialization, it has to be done outside.
 	static serialize(nodes) {
 		let result = "strict graph {\n"
 		result += nodes.map(node => {
@@ -50,17 +51,17 @@ class Node {
 		}
 	}
 
+	checkCollision(pos) {
+		const dist = this.pos.sub(pos)
+		return dist.x > -this.textWidth / 2 - 10
+			&& dist.x < this.textWidth / 2 + 10
+			&& dist.y > -Node.height
+			&& dist.y < Node.height
+	}
+
 	update() {
-		this.color = "black"
-		const cursorDist = this.pos.sub(cursor)
-		if (cursorDist.x > -this.textWidth / 2 - 10
-			&& cursorDist.x < this.textWidth / 2 + 10
-			&& cursorDist.y > -Node.height
-			&& cursorDist.y < Node.height) {
-			if (!hoveredNode) {
-				hoveredNode = this
-				this.color = "blue"
-			}
+		if (this.checkCollision(Input.pointer.add(camera).add(cameraShift))) {
+			hoveredNode = this
 		}
 	}
 	render() {
@@ -68,7 +69,7 @@ class Node {
 		Ctx.translate(this.pos)
 		Ctx.beginPath()
 		Ctx.ellipse(Vector.zero, new Vector(this.textWidth / 2 + 10, Node.height), 0, 0, Math.PI * 2)
-		Ctx.fillStyle(hoveredNode === this ? "#ddd" : "#ccc")
+		Ctx.fillStyle(this === hoveredNode ? "#ddd" : "#ccc")
 		Ctx.fill()
 		Ctx.strokeStyle(this.color)
 		Ctx.stroke()

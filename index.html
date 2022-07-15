@@ -26,12 +26,21 @@
             .dragging {
                 cursor: grabbing;
             }
+            #side-menu {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 200px;
+                backdrop-filter: blur(10px);
+            }
             @media screen and (max-width: 950px) {
             }
         </style>
     </head>
     <body>
         <canvas id="Canvas"></canvas>
+        <div id="side-menu">234234</div>
 
         <script src="vector.js"></script>
         <script src="utils.js"></script>

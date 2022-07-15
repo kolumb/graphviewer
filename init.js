@@ -1,5 +1,6 @@
 "use strict";
 const canvas = document.querySelector("#Canvas");
+const menu = document.querySelector("#side-menu");
 const ctx = canvas.getContext("2d", { alpha: false });
 Ctx.ctx = ctx;
 let pause = true;
@@ -7,18 +8,24 @@ let lastFrameTime = 0;
 
 Screen.updateSize();
 
+const STATES = Enum(["default", "panning", "dragging"])
+let state = STATES.default
+let lastClickHandled = true
+
 const camera = Screen.center.flip()
 const cameraShift = new Vector()
 let zoom = 1
 const nodes = []
 const edges = []
+let selectedNode
+let hoveredNode
+const selectedNodes = []
 for (let i = 0; i < 10; i++) {
 	const label = new Array(Math.floor(Math.random() * 20 + 6)).fill(0).map(_ => String.fromCharCode(60 + Math.floor(Math.random() * 60))).join("")
 	nodes.push(new Node(Node.idCounter++, Vector.random().scale(400*(1 -Math.random()**2)), label))
 }
 edges.push(new Edge(nodes[0], nodes[1]))
 const cursor = new Vector()
-let hoveredNode = null
 const hoveredNodeShift = new Vector()
 
 frame();

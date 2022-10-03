@@ -8,24 +8,22 @@ class Input {
     static pointer = new Vector();
     static downState = false;
     static zoom = 0;
+    static scale = 1;
     static downPos = new Vector()
 
     static pointerdownHandler(e) {
-        Input.pointer.set(e.offsetX, e.offsetY); // e.clientY - canvas.offsetTop
+        Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
         Input.downState = true;
         if (hoveredNode) {
-            const scale = 10 ** (Input.zoom / 2000)
-            hoveredNodeShift.setFrom(hoveredNode.pos.sub(camera.add(Input.pointer).scale(1 / scale)))
+            hoveredNodeShift.setFrom(hoveredNode.pos.sub(cursor))
         } else {
             Input.downPos.setFrom(Input.pointer)
         }
         lastClickHandled = false
     }
     static pointermoveHandler(e) {
-        const newPos = new Vector(e.offsetX, e.offsetY)
         Input.pointer.set(e.offsetX, e.offsetY);
-        const scale = 10 ** (Input.zoom / 2000)
-        cursor.setFrom(camera.add(cameraShift).add(Input.pointer).scale(1 / scale))
+        cursor.setFrom(Input.pointer.add(cameraTopLeft.add(cameraShift)).scale(1 / Input.scale))
     }
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
@@ -39,7 +37,7 @@ class Input {
             selectedNode = null
             canvas.classList.remove("dragging")
         } else {
-            camera.setFrom(camera.add(cameraShift))
+            cameraTopLeft.setFrom(cameraTopLeft.add(cameraShift))
             cameraShift.setFrom(Vector.zero)
             canvas.classList.remove("moving")
         }
@@ -96,10 +94,10 @@ class Input {
 
     static wheelHandler(e) {
         if (pause) return;
-        const oldScale = 10 ** (Input.zoom / 2000)
         Input.zoom += e.deltaY
-        const newScale = 10 ** (Input.zoom / 2000)
-        camera.addMut(camera.add(Input.pointer).scale(1 / oldScale).scale(newScale-oldScale))
+        const oldScale = Input.scale
+        Input.scale = 10 ** (Input.zoom / 2000)
+        cameraTopLeft.addMut(cursor.scale(Input.scale-oldScale))
     }
 
     static copyHandler(e) {

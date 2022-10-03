@@ -60,7 +60,7 @@ class Node {
 	}
 
 	update() {
-		if (this.checkCollision(Input.pointer.add(camera).add(cameraShift))) {
+		if (this.checkCollision(cursor)) {
 			hoveredNode = this
 		}
 	}

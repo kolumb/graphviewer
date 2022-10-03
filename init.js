@@ -12,7 +12,7 @@ const STATES = Enum(["default", "panning", "dragging"])
 let state = STATES.default
 let lastClickHandled = true
 
-const camera = Screen.center.flip()
+const cameraTopLeft = Screen.center.flip()
 const cameraShift = new Vector()
 let zoom = 1
 const nodes = []

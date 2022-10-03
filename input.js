@@ -13,12 +13,12 @@ class Input {
     static pointerdownHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
         Input.downState = true;
-        if (hoveredNode) {
-            hoveredNodeShift.setFrom(hoveredNode.pos.sub(App.cursor))
+        if (App.hoveredNode) {
+            App.hoveredNodeShift.setFrom(App.hoveredNode.pos.sub(App.cursor))
         } else {
             Input.downPos.setFrom(Input.pointer)
         }
-        lastClickHandled = false
+        App.lastClickHandled = false
     }
     static pointermoveHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
@@ -30,10 +30,10 @@ class Input {
         // if (canvas.classList.contains("dragging")) {
         //     canvas.classList.remove("dragging")
         // }
-        if (selectedNode) {
+        if (App.selectedNode) {
             // selectedNode.pos.setFrom(cursor.add(hoveredNodeShift))
-            selectedNode.color = "black"
-            selectedNode = null
+            App.selectedNode.color = "black"
+            App.selectedNode = null
             canvas.classList.remove("dragging")
         } else {
             App.applyCameraShift()

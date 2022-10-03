@@ -5,33 +5,33 @@ const SECOND = 1000;
 
 function tick(lag) {
     App.updateCamera(lag)
-    hoveredNode = null
+    App.hoveredNode = null
     nodes.forEach(node => node.update())
 
-    if (!lastClickHandled) {
-        lastClickHandled = true
-        if (hoveredNode) {
-            if (!selectedNode) {
-                selectedNode = hoveredNode
-                selectedNode.color = "blue"
+    if (!App.lastClickHandled) {
+        App.lastClickHandled = true
+        if (App.hoveredNode) {
+            if (!App.selectedNode) {
+                App.selectedNode = App.hoveredNode
+                App.selectedNode.color = "blue"
                 canvas.classList.add("dragging")
             }
         } else {
-            if (selectedNode) {
-                selectedNode.color = "orange"
-                selectedNode = null
+            if (App.selectedNode) {
+                App.selectedNode.color = "orange"
+                App.selectedNode = null
             }
             canvas.classList.add("moving")
         }
     }
     if (Input.downState) {
-        if (selectedNode) {
-            selectedNode.pos.setFrom(App.cursor.add(hoveredNodeShift))
+        if (App.selectedNode) {
+            App.selectedNode.pos.setFrom(App.cursor.add(App.hoveredNodeShift))
         } else {
             App.updateCameraShift()
         }
     } else {
-        if (hoveredNode) {
+        if (App.hoveredNode) {
             if (!canvas.classList.contains("hovering")) {
                 canvas.classList.add("hovering")
             }

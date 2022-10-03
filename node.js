@@ -61,7 +61,7 @@ class Node {
 
 	update() {
 		if (this.checkCollision(App.cursor)) {
-			hoveredNode = this
+			App.hoveredNode = this
 		}
 	}
 	render() {
@@ -69,7 +69,7 @@ class Node {
 		Ctx.translate(this.pos)
 		Ctx.beginPath()
 		Ctx.ellipse(Vector.zero, new Vector(this.textWidth / 2 + 10, Node.height), 0, 0, Math.PI * 2)
-		Ctx.fillStyle(this === hoveredNode ? "#ddd" : "#ccc")
+		Ctx.fillStyle(this === App.hoveredNode ? "#ddd" : "#ccc")
 		Ctx.fill()
 		Ctx.strokeStyle(this.color)
 		Ctx.stroke()

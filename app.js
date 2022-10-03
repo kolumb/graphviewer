@@ -4,6 +4,15 @@ class App {
     static cameraShift = new Vector();
     static cameraSpeed = 10
     static scale = 1;
+
+    static hoveredNode;
+    static hoveredNodeShift = new Vector();
+
+    static lastClickHandled = true
+
+    static selectedNode;
+    static selectedNodes = [];
+
     static updateCursor() {
         App.cursor.setFrom(Input.pointer.add(App.camera.add(App.cameraShift)).scale(1 / App.scale))
     }

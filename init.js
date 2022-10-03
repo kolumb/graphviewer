@@ -14,7 +14,6 @@ let lastClickHandled = true
 
 const cameraTopLeft = Screen.center.flip()
 const cameraShift = new Vector()
-let zoom = 1
 const nodes = []
 const edges = []
 let selectedNode

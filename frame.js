@@ -92,9 +92,8 @@ function render() {
     Ctx.fillRect(Vector.zero, Screen.size);
     Ctx.save()
 
-    const scale = 10 ** (Input.zoom / 2000)
     Ctx.translate(cameraTopLeft.add(cameraShift).flip())
-    Ctx.scale(new Vector(scale, scale))
+    Ctx.scale(new Vector(App.scale, App.scale))
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 

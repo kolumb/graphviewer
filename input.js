@@ -8,7 +8,6 @@ class Input {
     static pointer = new Vector();
     static downState = false;
     static zoom = 0;
-    static scale = 1;
     static downPos = new Vector()
 
     static pointerdownHandler(e) {
@@ -95,9 +94,9 @@ class Input {
     static wheelHandler(e) {
         if (pause) return;
         Input.zoom += e.deltaY
-        const oldScale = Input.scale
-        Input.scale = 10 ** (Input.zoom / 2000)
-        cameraTopLeft.addMut(App.cursor.scale(Input.scale-oldScale))
+        const oldScale = App.scale
+        App.updateScale()
+        cameraTopLeft.addMut(App.cursor.scale(App.scale - oldScale))
     }
 
     static copyHandler(e) {

@@ -25,7 +25,6 @@ for (let i = 0; i < 10; i++) {
 	nodes.push(new Node(Node.idCounter++, Vector.random().scale(400*(1 -Math.random()**2)), label))
 }
 edges.push(new Edge(nodes[0], nodes[1]))
-const cursor = new Vector()
 const hoveredNodeShift = new Vector()
 
 frame();

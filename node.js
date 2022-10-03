@@ -60,7 +60,7 @@ class Node {
 	}
 
 	update() {
-		if (this.checkCollision(cursor)) {
+		if (this.checkCollision(App.cursor)) {
 			hoveredNode = this
 		}
 	}

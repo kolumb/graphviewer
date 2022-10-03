@@ -15,7 +15,7 @@ class Input {
         Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
         Input.downState = true;
         if (hoveredNode) {
-            hoveredNodeShift.setFrom(hoveredNode.pos.sub(cursor))
+            hoveredNodeShift.setFrom(hoveredNode.pos.sub(App.cursor))
         } else {
             Input.downPos.setFrom(Input.pointer)
         }
@@ -23,7 +23,7 @@ class Input {
     }
     static pointermoveHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
-        cursor.setFrom(Input.pointer.add(cameraTopLeft.add(cameraShift)).scale(1 / Input.scale))
+        App.updateCursor()
     }
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
@@ -97,7 +97,7 @@ class Input {
         Input.zoom += e.deltaY
         const oldScale = Input.scale
         Input.scale = 10 ** (Input.zoom / 2000)
-        cameraTopLeft.addMut(cursor.scale(Input.scale-oldScale))
+        cameraTopLeft.addMut(App.cursor.scale(Input.scale-oldScale))
     }
 
     static copyHandler(e) {

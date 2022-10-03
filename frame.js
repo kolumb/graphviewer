@@ -38,7 +38,7 @@ function tick(lag) {
     }
     if (Input.downState) {
         if (selectedNode) {
-            selectedNode.pos.setFrom(cursor.add(hoveredNodeShift))
+            selectedNode.pos.setFrom(App.cursor.add(hoveredNodeShift))
         } else {
             cameraShift.setFrom(Input.downPos.sub(Input.pointer))
         }
@@ -100,7 +100,7 @@ function render() {
 
     edges.forEach(edge => edge.render())
     nodes.forEach(node => node.render())
-    Ctx.fillRect(cursor, new Vector(10, 10))
+    Ctx.fillRect(App.cursor, new Vector(10, 10))
 
     Ctx.restore()
 }

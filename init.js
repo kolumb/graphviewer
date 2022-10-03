@@ -10,9 +10,6 @@ let lastFrameTime = 0;
 Screen.updateSize();
 App.camera = Screen.center.flip()
 
-const STATES = Enum(["default", "panning", "dragging"])
-let state = STATES.default
-
 const nodes = []
 const edges = []
 for (let i = 0; i < 10; i++) {

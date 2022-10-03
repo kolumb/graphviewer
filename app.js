@@ -13,6 +13,10 @@ class App {
     static selectedNode;
     static selectedNodes = [];
 
+
+    static states = Enum(["default", "panning", "dragging"])
+    static state = App.states.default
+
     static updateCursor() {
         App.cursor.setFrom(Input.pointer.add(App.camera.add(App.cameraShift)).scale(1 / App.scale))
     }

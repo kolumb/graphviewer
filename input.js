@@ -27,11 +27,7 @@ class Input {
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
-        // if (canvas.classList.contains("dragging")) {
-        //     canvas.classList.remove("dragging")
-        // }
         if (App.selectedNode) {
-            // selectedNode.pos.setFrom(cursor.add(hoveredNodeShift))
             App.selectedNode.color = "black"
             App.selectedNode = null
             canvas.classList.remove("dragging")

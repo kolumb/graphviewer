@@ -41,39 +41,6 @@ function tick(lag) {
             }
         }
     }
-
-
-    // if (Input.downState && !hoveredNode) {
-    //     cameraShift.setFrom(Input.downPos.sub(Input.pointer))
-    // }
-    // if (Input.downState) {
-    //     if (hoveredNode) {
-    //         hoveredNode.pos.setFrom(cursor.add(hoveredNodeShift))
-    //         if (!canvas.classList.contains("dragging")) {
-    //             canvas.classList.add("dragging")
-    //         }
-    //     } else {
-    //         if (canvas.classList.contains("dragging")) {
-    //             canvas.classList.remove("dragging")
-    //         }
-    //         if (!canvas.classList.contains("moving")) {
-    //             canvas.classList.add("moving")
-    //         }
-    //     }
-    // } else {
-    //     if (hoveredNode) {
-    //         if (!canvas.classList.contains("hovering")) {
-    //             canvas.classList.add("hovering")
-    //         }
-    //     } else {
-    //         if (canvas.classList.contains("hovering")) {
-    //             canvas.classList.remove("hovering")
-    //         }
-    //         if (canvas.classList.contains("moving")) {
-    //             canvas.classList.remove("moving")
-    //         }
-    //     }
-    // }
 }
 function render() {
     Ctx.fillStyle(pause ? "rgb(200,200,200)" : "rgb(240,240,240)");

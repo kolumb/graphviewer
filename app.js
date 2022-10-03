@@ -16,11 +16,13 @@ class App {
     static updateCursor() {
         App.cursor.setFrom(Input.pointer.add(App.camera.add(App.cameraShift)).scale(1 / App.scale))
     }
+
     static updateScale() {
         const oldScale = App.scale
         App.scale = 10 ** (Input.zoom / 2000)
         App.camera.addMut(App.cursor.scale(App.scale - oldScale))
     }
+
     static updateCamera(lag) {
         if (Input.left) {
             App.camera.x -= App.cameraSpeed * lag

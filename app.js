@@ -1,9 +1,5 @@
 class App {
     static cursor = new Vector();
-    static camera = new Vector();
-    static cameraShift = new Vector();
-    static cameraSpeed = 10
-    static scale = 1;
 
     static hoveredNode;
     static hoveredNodeShift = new Vector();
@@ -18,35 +14,7 @@ class App {
     static state = App.states.default
 
     static updateCursor() {
-        App.cursor.setFrom(Input.pointer.add(App.camera.add(App.cameraShift)).scale(1 / App.scale))
-    }
-
-    static updateScale() {
-        const oldScale = App.scale
-        App.scale = 10 ** (Input.zoom / 2000)
-        App.camera.addMut(App.cursor.scale(App.scale - oldScale))
-    }
-
-    static updateCamera(lag) {
-        if (Input.left) {
-            App.camera.x -= App.cameraSpeed * lag
-        }
-        if (Input.right) {
-            App.camera.x += App.cameraSpeed * lag
-        }
-        if (Input.up) {
-            App.camera.y -= App.cameraSpeed * lag
-        }
-        if (Input.down) {
-            App.camera.y += App.cameraSpeed * lag
-        }
-    }
-    static updateCameraShift() {
-        App.cameraShift.setFrom(Input.downPos.sub(Input.pointer))
-    }
-    static applyCameraShift() {
-        App.camera.addMut(App.cameraShift)
-        App.cameraShift.setFrom(Vector.zero)
+        App.cursor.setFrom(Input.pointer.add(Camera.pos.add(Camera.shift)).scale(1 / Camera.scale))
     }
 
     static update(lag) {
@@ -70,7 +38,7 @@ class App {
             if (App.selectedNode) {
                 App.selectedNode.pos.setFrom(App.cursor.add(App.hoveredNodeShift))
             } else {
-                App.updateCameraShift()
+                Camera.updateShift()
             }
         } else {
             if (App.hoveredNode) {

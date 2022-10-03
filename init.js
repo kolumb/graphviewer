@@ -8,7 +8,7 @@ let pause = true;
 let lastFrameTime = 0;
 
 Screen.updateSize();
-App.camera = Screen.center.flip()
+Camera.pos = Screen.center.flip()
 
 const nodes = []
 const edges = []

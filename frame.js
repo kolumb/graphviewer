@@ -4,7 +4,7 @@ const TARGET_FPS = 60;
 const SECOND = 1000;
 
 function tick(lag) {
-    App.updateCamera(lag)
+    Camera.update(lag)
     App.hoveredNode = null
     nodes.forEach(node => node.update(lag))
     App.update(lag)
@@ -14,8 +14,8 @@ function render() {
     Ctx.fillRect(Vector.zero, Screen.size);
     Ctx.save()
 
-    Ctx.translate(App.camera.add(App.cameraShift).flip())
-    Ctx.scale(new Vector(App.scale, App.scale))
+    Ctx.translate(Camera.pos.add(Camera.shift).flip())
+    Ctx.scale(new Vector(Camera.scale, Camera.scale))
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 

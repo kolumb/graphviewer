@@ -1,4 +1,5 @@
 "use strict";
+
 const canvas = document.querySelector("#Canvas");
 const menu = document.querySelector("#side-menu");
 const ctx = canvas.getContext("2d", { alpha: false });
@@ -7,13 +8,12 @@ let pause = true;
 let lastFrameTime = 0;
 
 Screen.updateSize();
+App.camera = Screen.center.flip()
 
 const STATES = Enum(["default", "panning", "dragging"])
 let state = STATES.default
 let lastClickHandled = true
 
-const cameraTopLeft = Screen.center.flip()
-const cameraShift = new Vector()
 const nodes = []
 const edges = []
 let selectedNode

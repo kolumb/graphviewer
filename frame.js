@@ -1,22 +1,10 @@
 "use strict";
+
 const TARGET_FPS = 60;
 const SECOND = 1000;
 
-const cameraSpeed = 10
-const previousCamera = new Vector()
 function tick(lag) {
-    if (Input.left) {
-        camera.x -= cameraSpeed
-    }
-    if (Input.right) {
-        camera.x += cameraSpeed
-    }
-    if (Input.up) {
-        camera.y -= cameraSpeed
-    }
-    if (Input.down) {
-        camera.y += cameraSpeed
-    }
+    App.updateCamera(lag)
     hoveredNode = null
     nodes.forEach(node => node.update())
 
@@ -40,7 +28,7 @@ function tick(lag) {
         if (selectedNode) {
             selectedNode.pos.setFrom(App.cursor.add(hoveredNodeShift))
         } else {
-            cameraShift.setFrom(Input.downPos.sub(Input.pointer))
+            App.updateCameraShift()
         }
     } else {
         if (hoveredNode) {
@@ -92,7 +80,7 @@ function render() {
     Ctx.fillRect(Vector.zero, Screen.size);
     Ctx.save()
 
-    Ctx.translate(cameraTopLeft.add(cameraShift).flip())
+    Ctx.translate(App.camera.add(App.cameraShift).flip())
     Ctx.scale(new Vector(App.scale, App.scale))
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))

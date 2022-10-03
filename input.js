@@ -36,8 +36,7 @@ class Input {
             selectedNode = null
             canvas.classList.remove("dragging")
         } else {
-            cameraTopLeft.setFrom(cameraTopLeft.add(cameraShift))
-            cameraShift.setFrom(Vector.zero)
+            App.applyCameraShift()
             canvas.classList.remove("moving")
         }
     }
@@ -94,9 +93,7 @@ class Input {
     static wheelHandler(e) {
         if (pause) return;
         Input.zoom += e.deltaY
-        const oldScale = App.scale
         App.updateScale()
-        cameraTopLeft.addMut(App.cursor.scale(App.scale - oldScale))
     }
 
     static copyHandler(e) {

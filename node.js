@@ -59,7 +59,7 @@ class Node {
 			&& dist.y < Node.height
 	}
 
-	update() {
+	update(lag) {
 		if (this.checkCollision(App.cursor)) {
 			App.hoveredNode = this
 		}

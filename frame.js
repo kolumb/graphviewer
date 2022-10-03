@@ -6,41 +6,8 @@ const SECOND = 1000;
 function tick(lag) {
     App.updateCamera(lag)
     App.hoveredNode = null
-    nodes.forEach(node => node.update())
-
-    if (!App.lastClickHandled) {
-        App.lastClickHandled = true
-        if (App.hoveredNode) {
-            if (!App.selectedNode) {
-                App.selectedNode = App.hoveredNode
-                App.selectedNode.color = "blue"
-                canvas.classList.add("dragging")
-            }
-        } else {
-            if (App.selectedNode) {
-                App.selectedNode.color = "orange"
-                App.selectedNode = null
-            }
-            canvas.classList.add("moving")
-        }
-    }
-    if (Input.downState) {
-        if (App.selectedNode) {
-            App.selectedNode.pos.setFrom(App.cursor.add(App.hoveredNodeShift))
-        } else {
-            App.updateCameraShift()
-        }
-    } else {
-        if (App.hoveredNode) {
-            if (!canvas.classList.contains("hovering")) {
-                canvas.classList.add("hovering")
-            }
-        } else {
-            if (canvas.classList.contains("hovering")) {
-                canvas.classList.remove("hovering")
-            }
-        }
-    }
+    nodes.forEach(node => node.update(lag))
+    App.update(lag)
 }
 function render() {
     Ctx.fillStyle(pause ? "rgb(200,200,200)" : "rgb(240,240,240)");

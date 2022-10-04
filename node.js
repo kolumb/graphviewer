@@ -32,7 +32,8 @@ class Node {
 		Ctx.strokeStyle(this.color)
 		Ctx.stroke()
 		Ctx.fillStyle("black")
-		Ctx.fillText(this.label, new Vector(0, 4))
+		Ctx.fillText(this.label, new Vector(0, 3))
+		Ctx.fillText(this.id, new Vector(0, 25))
 		Ctx.restore()
 	}
 }

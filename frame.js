@@ -6,7 +6,6 @@ let lastFrameTime = 0;
 
 function tick(lag) {
     Camera.update(lag)
-    Graph.hovered = null
     Graph.update(lag)
     App.update(lag)
 }
@@ -21,7 +20,9 @@ function render() {
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
     Graph.render()
-    Ctx.fillRect(App.cursor, new Vector(10, 10))
+    Ctx.fillRect(App.cursor.sub(new Vector(10, 10)), new Vector(10, 10))
+    Ctx.fillStyle("white")
+    Ctx.fillText(Graph.hovered?.id, App.cursor.sub(new Vector(5, 0)))
 
     Ctx.restore()
 }

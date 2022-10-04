@@ -6,11 +6,16 @@ class Graph {
     static selected
     static selectedList = [];
     static update(lag) {
+        Graph.hovered = null
         Graph.nodes.forEach(node => node.update(lag))
     }
     static render(lag) {
         Graph.edges.forEach(edge => edge.render())
         Graph.nodes.forEach(node => node.render())
+    }
+    static bringToFront(node) {
+        Graph.nodes.splice(Graph.nodes.indexOf(node), 1)
+        Graph.nodes.push(Graph.selected)
     }
     static serialize() {
         let result = "strict graph {\n"

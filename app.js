@@ -18,6 +18,7 @@ class App {
             if (Graph.hovered) {
                 if (!Graph.selected) {
                     Graph.selected = Graph.hovered
+                    Graph.bringToFront(Graph.selected)
                     Graph.selected.color = "blue"
                     canvas.classList.add("dragging")
                 }

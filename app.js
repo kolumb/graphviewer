@@ -29,7 +29,7 @@ class App {
         }
         if (Input.downState) {
             if (Graph.selected) {
-                Graph.selected.pos.setFrom(App.cursor.add(Graph.hoveredShift))
+                Graph.selected.pos.setFrom(App.cursor.add(Graph.selectedShift))
             } else {
                 Camera.updateShift()
             }

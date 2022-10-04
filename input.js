@@ -12,12 +12,8 @@ class Input {
 
     static pointerdownHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
+        Input.downPos.setFrom(Input.pointer)
         Input.downState = true;
-        if (Graph.hovered) {
-            Graph.hoveredShift.setFrom(Graph.hovered.pos.sub(App.cursor))
-        } else {
-            Input.downPos.setFrom(Input.pointer)
-        }
         App.lastClickHandled = false
     }
     static pointermoveHandler(e) {

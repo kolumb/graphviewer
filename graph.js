@@ -2,8 +2,8 @@ class Graph {
     static nodes = []
     static edges = []
     static hovered
-    static hoveredShift = new Vector();
     static selected
+    static selectedShift = new Vector();
     static selectedList = [];
     static update(lag) {
         Graph.hovered = null
@@ -15,6 +15,7 @@ class Graph {
     }
     static select(node) {
         Graph.selected = node
+        Graph.selectedShift.setFrom(node.pos.sub(App.cursor))
         Graph.nodes.splice(Graph.nodes.indexOf(node), 1)
         Graph.nodes.push(node)
         Graph.selected.color = "blue"

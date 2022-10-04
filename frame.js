@@ -2,6 +2,7 @@
 
 const TARGET_FPS = 60;
 const SECOND = 1000;
+let lastFrameTime = 0;
 
 function tick(lag) {
     Camera.update(lag)
@@ -10,7 +11,7 @@ function tick(lag) {
     App.update(lag)
 }
 function render() {
-    Ctx.fillStyle(pause ? "rgb(200,200,200)" : "rgb(240,240,240)");
+    Ctx.fillStyle(App.pause ? "rgb(200,200,200)" : "rgb(240,240,240)");
     Ctx.fillRect(Vector.zero, Screen.size);
     Ctx.save()
 
@@ -31,7 +32,7 @@ function frame(timestamp) {
 
     if (dt < SECOND) tick(dt * TARGET_FPS / SECOND);
     render();
-    if (pause === false) {
+    if (App.pause === false) {
         requestAnimationFrame(frame);
     }
 }

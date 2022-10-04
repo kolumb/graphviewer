@@ -42,8 +42,8 @@ class Input {
             case KEY.space:
                 if (e.target.tagName === "BUTTON") return;
             case KEY.p:
-                pause = !pause;
-                if (pause === false) {
+                App.pause = !App.pause;
+                if (App.pause === false) {
                     frame();
                 }
                 break;
@@ -87,7 +87,7 @@ class Input {
     }
 
     static wheelHandler(e) {
-        if (pause) return;
+        if (App.pause) return;
         Input.zoom += e.deltaY
         Camera.updateScale()
     }
@@ -101,7 +101,7 @@ class Input {
         e.preventDefault()
         const text = (e.clipboardData || window.clipboardData)?.getData("text")
         Graph.deserialize(text.trim())
-        if (pause) render()
+        if (App.pause) render()
     }
 }
 

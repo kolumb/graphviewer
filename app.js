@@ -1,4 +1,6 @@
 class App {
+    static pause = false;
+
     static cursor = new Vector();
 
     static lastClickHandled = true

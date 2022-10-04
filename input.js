@@ -13,8 +13,8 @@ class Input {
     static pointerdownHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
         Input.downState = true;
-        if (App.hoveredNode) {
-            App.hoveredNodeShift.setFrom(App.hoveredNode.pos.sub(App.cursor))
+        if (Graph.hovered) {
+            Graph.hoveredShift.setFrom(Graph.hovered.pos.sub(App.cursor))
         } else {
             Input.downPos.setFrom(Input.pointer)
         }
@@ -27,9 +27,9 @@ class Input {
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
-        if (App.selectedNode) {
-            App.selectedNode.color = "black"
-            App.selectedNode = null
+        if (Graph.selected) {
+            Graph.selected.color = "black"
+            Graph.selected = null
             canvas.classList.remove("dragging")
         } else {
             Camera.applyShift()
@@ -93,14 +93,14 @@ class Input {
     }
 
     static copyHandler(e) {
-        e.clipboardData.setData("text/plain", Node.serialize(nodes))
+        e.clipboardData.setData("text/plain", Graph.serialize())
         e.preventDefault()
     }
 
     static pasteHandler(e) {
         e.preventDefault()
         const text = (e.clipboardData || window.clipboardData)?.getData("text")
-        Node.deserialize(text.trim())
+        Graph.deserialize(text.trim())
         if (pause) render()
     }
 }

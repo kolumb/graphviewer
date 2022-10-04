@@ -1,14 +1,7 @@
 class App {
     static cursor = new Vector();
 
-    static hoveredNode;
-    static hoveredNodeShift = new Vector();
-
     static lastClickHandled = true
-
-    static selectedNode;
-    static selectedNodes = [];
-
 
     static states = Enum(["default", "panning", "dragging"])
     static state = App.states.default
@@ -20,28 +13,28 @@ class App {
     static update(lag) {
         if (!App.lastClickHandled) {
             App.lastClickHandled = true
-            if (App.hoveredNode) {
-                if (!App.selectedNode) {
-                    App.selectedNode = App.hoveredNode
-                    App.selectedNode.color = "blue"
+            if (Graph.hovered) {
+                if (!Graph.selected) {
+                    Graph.selected = Graph.hovered
+                    Graph.selected.color = "blue"
                     canvas.classList.add("dragging")
                 }
             } else {
-                if (App.selectedNode) {
-                    App.selectedNode.color = "orange"
-                    App.selectedNode = null
+                if (Graph.selected) {
+                    Graph.selected.color = "orange"
+                    Graph.selected = null
                 }
                 canvas.classList.add("moving")
             }
         }
         if (Input.downState) {
-            if (App.selectedNode) {
-                App.selectedNode.pos.setFrom(App.cursor.add(App.hoveredNodeShift))
+            if (Graph.selected) {
+                Graph.selected.pos.setFrom(App.cursor.add(Graph.hoveredShift))
             } else {
                 Camera.updateShift()
             }
         } else {
-            if (App.hoveredNode) {
+            if (Graph.hovered) {
                 if (!canvas.classList.contains("hovering")) {
                     canvas.classList.add("hovering")
                 }

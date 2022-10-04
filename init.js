@@ -10,13 +10,11 @@ let lastFrameTime = 0;
 Screen.updateSize();
 Camera.pos = Screen.center.flip()
 
-const nodes = []
-const edges = []
 for (let i = 0; i < 10; i++) {
 	const label = new Array(Math.floor(Math.random() * 20 + 6)).fill(0).map(_ => String.fromCharCode(60 + Math.floor(Math.random() * 60))).join("")
-	nodes.push(new Node(Node.idCounter++, Vector.random().scale(400*(1 -Math.random()**2)), label))
+	Graph.nodes.push(new Node(Node.idCounter++, Vector.random().scale(400*(1 -Math.random()**2)), label))
 }
-edges.push(new Edge(nodes[0], nodes[1]))
+Graph.edges.push(new Edge(Graph.nodes[0], Graph.nodes[1]))
 
 frame();
 

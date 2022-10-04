@@ -5,8 +5,8 @@ const SECOND = 1000;
 
 function tick(lag) {
     Camera.update(lag)
-    App.hoveredNode = null
-    nodes.forEach(node => node.update(lag))
+    Graph.hovered = null
+    Graph.update(lag)
     App.update(lag)
 }
 function render() {
@@ -19,8 +19,7 @@ function render() {
     Ctx.fillStyle("black")
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
-    edges.forEach(edge => edge.render())
-    nodes.forEach(node => node.render())
+    Graph.render()
     Ctx.fillRect(App.cursor, new Vector(10, 10))
 
     Ctx.restore()

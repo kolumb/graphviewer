@@ -13,9 +13,15 @@ class Graph {
         Graph.edges.forEach(edge => edge.render())
         Graph.nodes.forEach(node => node.render())
     }
-    static bringToFront(node) {
+    static select(node) {
+        Graph.selected = node
         Graph.nodes.splice(Graph.nodes.indexOf(node), 1)
-        Graph.nodes.push(Graph.selected)
+        Graph.nodes.push(node)
+        Graph.selected.color = "blue"
+    }
+    static deselect() {
+        Graph.selected.color = "black"
+        Graph.selected = null
     }
     static serialize() {
         let result = "strict graph {\n"

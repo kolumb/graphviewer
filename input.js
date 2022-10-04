@@ -28,8 +28,7 @@ class Input {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
         if (Graph.selected) {
-            Graph.selected.color = "black"
-            Graph.selected = null
+            Graph.deselect()
             canvas.classList.remove("dragging")
         } else {
             Camera.applyShift()

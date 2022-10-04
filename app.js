@@ -16,12 +16,9 @@ class App {
         if (!App.lastClickHandled) {
             App.lastClickHandled = true
             if (Graph.hovered) {
-                if (!Graph.selected) {
-                    Graph.selected = Graph.hovered
-                    Graph.bringToFront(Graph.selected)
-                    Graph.selected.color = "blue"
-                    canvas.classList.add("dragging")
-                }
+                if (Graph.selected) assert(false, "Unreachable")
+                Graph.select(Graph.hovered)
+                canvas.classList.add("dragging")
             } else {
                 if (Graph.selected) {
                     Graph.selected.color = "orange"

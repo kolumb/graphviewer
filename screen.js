@@ -13,6 +13,6 @@ class Screen {
 
     static resizeHandler() {
         Screen.updateSize();
-        if (pause) render();
+        if (App.pause) render();
     }
 }

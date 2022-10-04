@@ -5,7 +5,7 @@ class App {
 
     static lastClickHandled = true
 
-    static states = Enum(["default", "panning", "dragging"])
+    static states = Enum(["default", "panning", "dragging", "paused"])
     static state = App.states.default
 
     static updateCursor() {

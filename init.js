@@ -8,11 +8,26 @@ Ctx.ctx = ctx;
 Screen.updateSize();
 Camera.pos = Screen.center.flip()
 
-for (let i = 0; i < 10; i++) {
-	const label = new Array(Math.floor(Math.random() * 20 + 6)).fill(0).map(_ => String.fromCharCode(60 + Math.floor(Math.random() * 60))).join("")
-	Graph.nodes.push(new Node(Node.idCounter++, Vector.random().scale(400*(1 -Math.random()**2)), label))
-}
-Graph.edges.push(new Edge(Graph.nodes[0], Graph.nodes[1]))
+Graph.deserialize(`strict graph {
+    node0 [x=  -30, y=  -48, label="App"];
+    node1 [x= -105, y=  -48, label="Camera"];
+    node2 [x=   59, y=   13, label="Ctx"];
+    node3 [x=  -85, y=   71, label="Edge"];
+    node4 [x=   47, y=  -49, label="frame.js"];
+    node5 [x=  -50, y=   12, label="Graph"];
+    node6 [x=    2, y= -108, label="init.js"];
+    node7 [x=  -69, y= -108, label="Input"];
+    node8 [x=  -13, y=   66, label="Node"];
+    node9 [x=  129, y=   12, label="Screen"];
+    node10 [x=   16, y=  114, label="Vector"];
+    node11 [x=   83, y= -109, label="utils.js"];
+    node5 -- node8;
+    node5 -- node3;
+    node0 -- node5;
+    node6 -- node0;
+    node4 -- node2;
+    node2 -- node10;
+}`)
 
 frame();
 

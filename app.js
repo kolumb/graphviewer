@@ -15,8 +15,12 @@ class App {
     static update(lag) {
         if (!App.lastClickHandled) {
             App.lastClickHandled = true
+            if (App.pause) {
+                conosole.log("TODO: Skipping in pause")
+                return;
+            }
             if (Graph.hovered) {
-                if (Graph.selected) assert(false, "Unreachable")
+                if (Graph.selected) console.log("Unreachable")
                 Graph.select(Graph.hovered)
                 canvas.classList.add("dragging")
             } else {
@@ -43,6 +47,16 @@ class App {
                     canvas.classList.remove("hovering")
                 }
             }
+        }
+    }
+
+    static applyShift() {
+        if (Graph.selected) {
+            Graph.deselect()
+            canvas.classList.remove("dragging")
+        } else {
+            Camera.applyShift()
+            canvas.classList.remove("moving")
         }
     }
 }

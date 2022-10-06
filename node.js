@@ -33,7 +33,6 @@ class Node {
 		Ctx.stroke()
 		Ctx.fillStyle("black")
 		Ctx.fillText(this.label, new Vector(0, 3))
-		Ctx.fillText(this.id, new Vector(0, 25))
 		Ctx.restore()
 	}
 }

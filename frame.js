@@ -20,9 +20,6 @@ function render() {
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
     Graph.render()
-    Ctx.fillRect(App.cursor.sub(new Vector(10, 10)), new Vector(10, 10))
-    Ctx.fillStyle("white")
-    Ctx.fillText(Graph.hovered?.id, App.cursor.sub(new Vector(5, 0)))
 
     Ctx.restore()
 }

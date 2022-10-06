@@ -23,13 +23,7 @@ class Input {
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
-        if (Graph.selected) {
-            Graph.deselect()
-            canvas.classList.remove("dragging")
-        } else {
-            Camera.applyShift()
-            canvas.classList.remove("moving")
-        }
+        App.applyShift()
     }
 
     static keydownHandler(e) {

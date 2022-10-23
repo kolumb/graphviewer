@@ -59,4 +59,15 @@ class App {
             canvas.classList.remove("moving")
         }
     }
+
+    static connectOveralpped() {
+        if (Graph.selected && Graph.hovered && Graph.selected != Graph.hovered) {
+            if (!Graph.edges.find(e =>
+                (e.node1.id === Graph.selected.id && e.node2.id === Graph.hovered.id)
+                || (e.node1.id === Graph.hovered.id && e.node2.id === Graph.selected.id)
+            )) {
+                Graph.edges.push(new Edge(Graph.selected, Graph.hovered))
+            }
+        }
+    }
 }

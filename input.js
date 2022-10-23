@@ -23,6 +23,7 @@ class Input {
     static pointerupHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);
         Input.downState = false;
+        App.connectOveralpped()
         App.applyShift()
     }
 

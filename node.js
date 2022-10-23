@@ -19,7 +19,9 @@ class Node {
 
 	update(lag) {
 		if (this.checkCollision(App.cursor)) {
-			Graph.hovered = this
+			if (Graph.selected !== this) {
+				Graph.hovered = this
+			}
 		}
 	}
 	render() {

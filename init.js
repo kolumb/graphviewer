@@ -29,7 +29,7 @@ Graph.deserialize(`strict graph {
     node2 -- node10;
 }`)
 
-frame();
+frame(0);
 
 window.addEventListener(EVENT.resize, Screen.resizeHandler);
 canvas.addEventListener(EVENT.pointerdown, Input.pointerdownHandler);

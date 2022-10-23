@@ -35,6 +35,9 @@ class Node {
 		Ctx.stroke()
 		Ctx.fillStyle("black")
 		Ctx.fillText(this.label, new Vector(0, 3))
+		if (App.potentialConnectionToggle && this === Graph.selected) {
+			Ctx.fillText("Toggle connection", new Vector(0, -20))
+		}
 		Ctx.restore()
 	}
 }

@@ -4,6 +4,7 @@ class App {
     static cursor = new Vector();
 
     static lastClickHandled = true
+    static potentialConnectionToggle = false
 
     static states = Enum(["default", "panning", "dragging", "paused"])
     static state = App.states.default
@@ -22,6 +23,7 @@ class App {
             if (Graph.hovered) {
                 if (Graph.selected) console.log("Unreachable")
                 Graph.select(Graph.hovered)
+                Graph.hovered = null
                 canvas.classList.add("dragging")
             } else {
                 if (Graph.selected) {
@@ -34,6 +36,7 @@ class App {
         if (Input.downState) {
             if (Graph.selected) {
                 Graph.selected.pos.setFrom(App.cursor.add(Graph.selectedShift))
+                App.potentialConnectionToggle = Graph.hovered !== null
             } else {
                 Camera.updateShift()
             }

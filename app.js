@@ -62,10 +62,15 @@ class App {
 
     static connectOveralpped() {
         if (Graph.selected && Graph.hovered && Graph.selected != Graph.hovered) {
-            if (!Graph.edges.find(e =>
+            const existingEgde = Graph.edges.find(e =>
                 (e.node1.id === Graph.selected.id && e.node2.id === Graph.hovered.id)
                 || (e.node1.id === Graph.hovered.id && e.node2.id === Graph.selected.id)
-            )) {
+            )
+            if (existingEgde) {
+                existingEgde.node1 = null
+                existingEgde.node2 = null
+                Graph.edges.splice(Graph.edges.indexOf(existingEgde), 1)
+            } else {
                 Graph.edges.push(new Edge(Graph.selected, Graph.hovered))
             }
         }

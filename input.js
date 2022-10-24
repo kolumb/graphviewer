@@ -9,23 +9,43 @@ class Input {
     static downState = false;
     static zoom = 0;
     static downPos = new Vector()
+    static pointerIDs = [] // TODO: Fix bugs in multitouch zoom
+    static lastDist = 0
 
     static pointerdownHandler(e) {
-        Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
-        Input.downPos.setFrom(Input.pointer)
-        Input.downState = true;
-        App.lastClickHandled = false
-        App.updateCursor()
+        if (Input.pointerIDs.length !== 1) {
+            Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
+            Input.downPos.setFrom(Input.pointer)
+            Input.downState = true;
+            App.lastClickHandled = false
+            App.updateCursor()
+        }
+        Input.pointerIDs.push({id: e.pointerId, pos: new Vector(e.offsetX, e.offsetY)})
     }
     static pointermoveHandler(e) {
-        Input.pointer.set(e.offsetX, e.offsetY);
-        App.updateCursor()
+        if (Input.pointerIDs.length === 2) {
+            const newDist = Input.pointerIDs[0].pos.distEuclidean(Input.pointerIDs[1].pos)
+            if (Input.lastDist != 0) {
+                Input.zoom += (newDist - Input.lastDist) / 100
+                Camera.updateScale()
+            }
+            Input.lastDist = newDist
+        } else {
+            Input.pointer.set(e.offsetX, e.offsetY);
+            Input.lastDist = 0
+            App.updateCursor()
+        }
+        Input.pointerIDs.find(p => p.id === e.pointerId)?.pos.set(e.offsetX, e.offsetY)
     }
     static pointerupHandler(e) {
-        Input.pointer.set(e.offsetX, e.offsetY);
-        Input.downState = false;
-        App.connectOveralpped()
-        App.applyShift()
+        if (Input.pointerIDs.length !== 2) {
+            Input.pointer.set(e.offsetX, e.offsetY);
+            Input.downState = false;
+            App.connectOveralpped()
+            App.applyShift()
+        }
+        const index = Input.pointerIDs.find(p => p.id === e.pointerId)
+        Input.pointerIDs.splice(index, 1)
     }
 
     static keydownHandler(e) {

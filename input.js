@@ -15,6 +15,7 @@ class Input {
         Input.downPos.setFrom(Input.pointer)
         Input.downState = true;
         App.lastClickHandled = false
+        App.updateCursor()
     }
     static pointermoveHandler(e) {
         Input.pointer.set(e.offsetX, e.offsetY);

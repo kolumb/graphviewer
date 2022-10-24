@@ -16,6 +16,7 @@
             #Canvas {
                 display: block;
                 background: lightgrey;
+                touch-action: none;
             }
             .moving {
                 cursor: move;
@@ -35,6 +36,13 @@
                 backdrop-filter: blur(10px);
             }
             @media screen and (max-width: 950px) {
+                #side-menu {
+                    top: auto;
+                    left: 0;
+                    bottom: 0;
+                    height: 100px;
+                    width: 100%;
+                }
             }
         </style>
     </head>

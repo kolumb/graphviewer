@@ -20,7 +20,7 @@ class App {
                 conosole.log("TODO: Skipping in pause")
                 return;
             }
-            if (Graph.hovered) {
+            if (Graph.hovered && Graph.hovered.checkCollision(App.cursor)) {
                 if (Graph.selected) console.log("Unreachable")
                 Graph.select(Graph.hovered)
                 Graph.hovered = null

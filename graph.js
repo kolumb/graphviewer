@@ -50,13 +50,20 @@ class Graph {
         for (let i = 1; i < lines.length - 1; i++) {
             const line = lines[i]
             if (line.indexOf("--") < 0) {
-                const [_, id, attributes] = line.trim().match(/(\S+)\s\[(.*)\];/)
-                let [x, y, label] = attributes.split(", ").map(pair => pair.split("=").slice(1).join("=").trim())
-                x = parseInt(x)
-                y = parseInt(y)
-                label = label.slice(1, label.length - 1).replaceAll("\\\"", "\"").replaceAll("\\\\", "\\")
-                const pos = new Vector(x, y)
-                Graph.nodes.push(new Node(id.slice(4), pos, label))
+                if (line.indexOf("->") < 0) {
+                    const [_, id, attributes] = line.trim().match(/(\S+)\s\[(.*)\];/)
+                    let [x, y, label] = attributes.split(", ").map(pair => pair.split("=").slice(1).join("=").trim())
+                    x = parseInt(x)
+                    y = parseInt(y)
+                    label = label.slice(1, label.length - 1).replaceAll("\\\"", "\"").replaceAll("\\\\", "\\")
+                    const pos = new Vector(x, y)
+                    Graph.nodes.push(new Node(id.slice(4), pos, label))
+                } else {
+                    const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*->\s*(\S+);/)
+                    const node1 = Graph.nodes.find(node => `node${node.id}` === node1ID)
+                    const node2 = Graph.nodes.find(node => `node${node.id}` === node2ID)
+                    Graph.edges.push(new Edge(node1, node2, /*directed*/ true))
+                }
             } else {
                 const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*--\s*(\S+);/)
                 const node1 = Graph.nodes.find(node => `node${node.id}` === node1ID)

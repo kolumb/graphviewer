@@ -41,7 +41,7 @@ class Graph {
     static deserialize(text) {
         Graph.nodes.length = 0
         Graph.edges.length = 0
-        const lines = text.trim().split("\n").map(s => s.trim())
+        const lines = text.trim().split("\n").map(s => s.trim()).filter(String)
         if (lines[0] !== "strict graph {" || lines[lines.length - 1] !== "}") {
             console.log(lines[0])
             console.log(lines[lines.length - 1])

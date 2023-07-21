@@ -50,24 +50,30 @@ class Graph {
         for (let i = 1; i < lines.length - 1; i++) {
             const line = lines[i]
             if (line.indexOf("--") < 0) {
-                if (line.indexOf("->") < 0) {
+                if (line.indexOf("->") < 0) { // orphan
+                    // TODO: Search for existing node, before creating new one
                     const [_, id, attributes] = line.trim().match(/(\S+)\s\[(.*)\];/)
                     let [x, y, label] = attributes.split(", ").map(pair => pair.split("=").slice(1).join("=").trim())
                     x = parseInt(x)
                     y = parseInt(y)
                     label = label.slice(1, label.length - 1).replaceAll("\\\"", "\"").replaceAll("\\\\", "\\")
                     const pos = new Vector(x, y)
-                    Graph.nodes.push(new Node(id.slice(4), pos, label))
-                } else {
-                    const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*->\s*(\S+);/)
-                    const node1 = Graph.nodes.find(node => `node${node.id}` === node1ID)
-                    const node2 = Graph.nodes.find(node => `node${node.id}` === node2ID)
+                    Graph.nodes.push(new Node(id, pos, label))
+                } else { // directed
+                    const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*->\s*(.+);/)
+                    let node1 = Graph.nodes.find(node => `${node.id}` === node1ID)
+                    let node2 = Graph.nodes.find(node => `${node.id}` === node2ID)
+                    if (!node2) {
+                        const pos = new Vector((Math.random()*500 - 250) | 0, (Math.random()*500 - 250) | 0)
+                        node2 = new Node(node2ID, pos, node2ID)
+                        Graph.nodes.push(node2)
+                    }
                     Graph.edges.push(new Edge(node1, node2, /*directed*/ true))
                 }
-            } else {
+            } else { // undirected
                 const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*--\s*(\S+);/)
-                const node1 = Graph.nodes.find(node => `node${node.id}` === node1ID)
-                const node2 = Graph.nodes.find(node => `node${node.id}` === node2ID)
+                let node1 = Graph.nodes.find(node => `${node.id}` === node1ID)
+                let node2 = Graph.nodes.find(node => `${node.id}` === node2ID)
                 Graph.edges.push(new Edge(node1, node2))
             }
         }

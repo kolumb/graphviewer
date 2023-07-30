@@ -47,35 +47,180 @@ class Graph {
             console.log(lines[lines.length - 1])
             assert(false, "Error while parsing pasted data")
         }
+        const states = Enum(["trim", "node", "attributesOrSeparator", "attributes", "separator", "string"])
+        const connectionTypes = Enum(["undefined", "undirected", "directed"])
         for (let i = 1; i < lines.length - 1; i++) {
             const line = lines[i]
-            if (line.indexOf("--") < 0) {
-                if (line.indexOf("->") < 0) { // orphan
-                    // TODO: Search for existing node, before creating new one
-                    const [_, id, attributes] = line.trim().match(/(\S+)\s\[(.*)\];/)
-                    let [x, y, label] = attributes.split(", ").map(pair => pair.split("=").slice(1).join("=").trim())
-                    x = parseInt(x)
-                    y = parseInt(y)
-                    label = label.slice(1, label.length - 1).replaceAll("\\\"", "\"").replaceAll("\\\\", "\\")
-                    const pos = new Vector(x, y)
-                    Graph.nodes.push(new Node(id, pos, label))
-                } else { // directed
-                    const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*->\s*(.+);/)
-                    let node1 = Graph.nodes.find(node => `${node.id}` === node1ID)
-                    let node2 = Graph.nodes.find(node => `${node.id}` === node2ID)
-                    if (!node2) {
-                        const pos = new Vector((Math.random()*500 - 250) | 0, (Math.random()*500 - 250) | 0)
-                        node2 = new Node(node2ID, pos, node2ID)
-                        Graph.nodes.push(node2)
+            let currentState = states.trim
+            let token = ""
+            let id1 = ""
+            let id2 = ""
+            let connectionType = connectionTypes.undefined
+            for (let j = 0; j < line.length; j++) {
+                const c = line[j]
+                // console.log(c)
+                // console.log(currentState)
+                switch (currentState) {
+                case states.trim:
+                    switch (c) {
+                    case "\t":
+                    case " ":
+                        break
+                    case "\"":
+                        assert(id2 === "", "Orphan string literal")
+                        currentState = states.string
+                        break
+                    case "-":
+                        assert(connectionType === connectionType.undefined, id1 === ""
+                            ? "Illigal start of node name"
+                            : "Second connection is not supported")
+                        break
+                    case "\r":
+                    case ";":
+                        assert(connectionType === connectionTypes.undefined || id2 !== "", "Expected second node name")
+                        break
+                    default:
+                        assert(id2 === "", "Unxpected third node name")
+                        currentState = states.node
+                        assert(token === "", "Garbage in token accumulator")
+                        token += c
                     }
-                    Graph.edges.push(new Edge(node1, node2, /*directed*/ true))
+                    break
+                case states.node:
+                    switch (c) {
+                    case "\t":
+                    case " ":
+                        currentState = states.attributesOrSeparator
+                        if (id1 !== "") {
+                            assert(id2 === "", "Illigal space in second node name")
+                            id2 = token
+                        } else {
+                            id1 = token
+                        }
+                        token = ""
+                        break
+                    case "\r":
+                    case ";":
+                        currentState = states.trim
+                        if (id1 !== "") {
+                            assert(id2 === "")
+                            assert(connectionType !== connectionType.undefined)
+                            id2 = token
+                        } else {
+                            id1 = token
+                        }
+                        token = ""
+                        break
+                    default:
+                        token += c
+                    }
+                    break
+                case states.attributesOrSeparator:
+                    switch (c) {
+                    case "[":
+                        currentState = states.attributes
+                        break
+                    case "\"":
+                        assert(false, "Unexpected string")
+                        break
+                    case "-":
+                        currentState = states.separator
+                        break
+                    case "\t":
+                    case " ":
+                        break
+                    case "\r":
+                    case ";":
+                        // node without attributes and edge
+                        break
+                    default:
+                        assert(false, "Unexpected string " + c)
+                    }
+                    break
+                case states.attributes:
+                    switch (c) {
+                    case "]":
+                        currentState = states.trim
+                        Graph.parseAttributes(id1, token)
+                        token = ""
+                        break
+                    case "\r":
+                    case ";":
+                        assert(false, "Unclosed attributes list (missing \"]\")")
+                        break
+                    default:
+                        token += c
+                    }
+                    break
+                case states.separator:
+                    switch (c) {
+                    case "-":
+                        connectionType = connectionTypes.undirected
+                        currentState = states.trim
+                        break
+                    case ">":
+                        connectionType = connectionTypes.directed
+                        currentState = states.trim
+                        break
+                    case "\r":
+                    case ";":
+                        assert(false, "Unfinished separator (supported connections are -- and -> )")
+                        break
+                    default:
+                        assert(false, "Invalid separator. Expected -- or -> or attributes list in [ ]")
+                    }
+                    break
+                case states.string:
+                    switch (c) {
+                    case "\"":
+                        currentState = states.attributesOrSeparator
+                        if (id1 !== "") {
+                            assert(id2 === "")
+                            assert(connectionType !== connectionType.undefined)
+                            id2 = token
+                        } else {
+                            id1 = token
+                        }
+                        token = ""
+                        break
+                    case "\r":
+                        assert(false, "Unfinished string literal")
+                        break
+                    default:
+                        token += c
+                    }
+                    break
+                default:
+                    assert(false, "Unreachable " + currentState)
                 }
-            } else { // undirected
-                const [_, node1ID, node2ID] = line.trim().match(/(\S+)\s*--\s*(\S+);/)
-                let node1 = Graph.nodes.find(node => `${node.id}` === node1ID)
-                let node2 = Graph.nodes.find(node => `${node.id}` === node2ID)
-                Graph.edges.push(new Edge(node1, node2))
+            }
+            assert(currentState == states.trim || currentState == states.attributesOrSeparator, "Unexpected state after deserialization " + currentState)
+            assert(connectionType === connectionTypes.undefined || id2 !== "")
+
+            if (connectionType !== connectionTypes.undefined) {
+                let node1 = Graph.nodes.find(node => `${node.id}` === id1)
+                let node2 = Graph.nodes.find(node => `${node.id}` === id2)
+                if (!node1) {
+                    const pos = new Vector((Math.random()*500 - 250) | 0, (Math.random()*500 - 250) | 0)
+                    node1 = new Node(id1, pos, id1)
+                    Graph.nodes.push(node1)
+                }
+                if (!node2) {
+                    const pos = new Vector((Math.random()*500 - 250) | 0, (Math.random()*500 - 250) | 0)
+                    node2 = new Node(id2, pos, id2)
+                    Graph.nodes.push(node2)
+                }
+                Graph.edges.push(new Edge(node1, node2, connectionType === connectionTypes.directed))
             }
         }
+    }
+    static parseAttributes(id, attributes) {
+        // TODO: Search for existing node, before creating new one
+        let [x, y, label] = attributes.split(", ").map(pair => pair.split("=").slice(1).join("=").trim())
+        x = parseInt(x)
+        y = parseInt(y)
+        label = label.slice(1, label.length - 1).replaceAll("\\\"", "\"").replaceAll("\\\\", "\\")
+        const pos = new Vector(x, y)
+        Graph.nodes.push(new Node(id, pos, label))
     }
 }

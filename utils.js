@@ -4,8 +4,8 @@ function assert(condition, message) {
         throw new Error(message)
     }
 }
-function todo() {
-    assert(false, "Not implemented.")
+function todo(description) {
+    assert(false, "Not implemented. " + (description ? description : ""))
 }
 function Enum(list) {
     return list.reduce(

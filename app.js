@@ -46,6 +46,7 @@ class App {
                 if (Graph.selected) console.log("Unreachable")
                 Graph.select(Graph.hovered)
                 Graph.hovered = null
+                Graph.selectedOriginalPos.setFrom(Graph.selected.pos)
                 canvas.classList.add("dragging")
             } else {
                 if (Graph.selected) {
@@ -98,6 +99,7 @@ class App {
             } else {
                 Graph.edges.push(new Edge(Graph.selected, Graph.hovered))
             }
+            Graph.selected.pos.setFrom(Graph.selectedOriginalPos)
         }
     }
 

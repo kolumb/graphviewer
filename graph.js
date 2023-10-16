@@ -4,6 +4,7 @@ class Graph {
     static hovered
     static selected
     static selectedShift = new Vector();
+    static selectedOriginalPos = new Vector();
     static selectedList = [];
     static update(lag) {
         Graph.hovered = null

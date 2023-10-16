@@ -20,4 +20,7 @@ class Edge {
 		Ctx.stroke()
 		Ctx.restore()
 	}
+	toString() {
+		return `${this.node1.label} ${this.directed ? "->" : "--"} ${this.node2.label}`
+	}
 }

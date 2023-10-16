@@ -9,6 +9,28 @@ class App {
     static states = Enum(["default", "panning", "dragging", "paused"])
     static state = App.states.default
 
+    static unstaged = { edges: [], nodes: [] }
+
+    static menu = undefined;
+
+    static placeFromUnstaged() {
+        const nextNode = App.unstaged.nodes.shift()
+        if (nextNode) {
+            Graph.nodes.push(nextNode)
+            const nextEdges = App.unstaged.edges.filter(e =>
+                (e.node1.id === nextNode.id)
+                || (e.node2.id === nextNode.id)
+            )
+            nextEdges.forEach(nextEdge => {
+                if (Graph.nodes.indexOf(nextEdge.node1) >=0 && Graph.nodes.indexOf(nextEdge.node2) >= 0) {
+                    Graph.edges.push(nextEdge);
+                    App.unstaged.edges.splice(App.unstaged.edges.indexOf(nextEdge), 1);
+                }
+            })
+        }
+        App.updateMenu()
+    }
+
     static updateCursor() {
         App.cursor.setFrom(Input.pointer.add(Camera.pos.add(Camera.shift)).scale(1 / Camera.scale))
     }
@@ -77,5 +99,21 @@ class App {
                 Graph.edges.push(new Edge(Graph.selected, Graph.hovered))
             }
         }
+    }
+
+    static updateMenu() {
+        while(App.menu.firstChild) {
+            App.menu.removeChild(App.menu.firstChild)
+        }
+        App.unstaged.nodes.slice(0,50).forEach((node, i) => {
+            const menuItem = document.createElement("li")
+            menuItem.innerText = (i == 0 ? "(":"") + node.label + (i == 0 ? ")":"")
+            App.menu.appendChild(menuItem)
+        })
+        App.unstaged.edges.slice(0,50).forEach(edge => {
+            const menuItem = document.createElement("li")
+            menuItem.innerText = String(edge)
+            App.menu.appendChild(menuItem)
+        })
     }
 }

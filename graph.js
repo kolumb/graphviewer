@@ -198,19 +198,19 @@ class Graph {
             assert(connectionType === connectionTypes.undefined || id2 !== "")
 
             if (connectionType !== connectionTypes.undefined) {
-                let node1 = Graph.nodes.find(node => `${node.id}` === id1)
-                let node2 = Graph.nodes.find(node => `${node.id}` === id2)
+                let node1 = App.unstaged.nodes.find(node => `${node.id}` === id1)
                 if (!node1) {
                     const pos = new Vector((Math.random()*500 - 250) | 0, (Math.random()*500 - 250) | 0)
                     node1 = new Node(id1, pos, id1)
-                    Graph.nodes.push(node1)
+                    App.unstaged.nodes.push(node1)
                 }
+                let node2 = App.unstaged.nodes.find(node => `${node.id}` === id2)
                 if (!node2) {
                     const pos = new Vector((Math.random()*500 - 250) | 0, (Math.random()*500 - 250) | 0)
                     node2 = new Node(id2, pos, id2)
-                    Graph.nodes.push(node2)
+                    App.unstaged.nodes.push(node2)
                 }
-                Graph.edges.push(new Edge(node1, node2, connectionType === connectionTypes.directed))
+                App.unstaged.edges.push(new Edge(node1, node2, connectionType === connectionTypes.directed))
             }
         }
     }
@@ -221,6 +221,6 @@ class Graph {
         y = parseInt(y)
         label = label.slice(1, label.length - 1).replaceAll("\\\"", "\"").replaceAll("\\\\", "\\")
         const pos = new Vector(x, y)
-        Graph.nodes.push(new Node(id, pos, label))
+        App.unstaged.nodes.push(new Node(id, pos, label))
     }
 }

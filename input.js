@@ -58,6 +58,9 @@ class Input {
                     frame();
                 }
                 break;
+            case KEY.n:
+                App.placeFromUnstaged();
+                break;
             case KEY.up:
             case KEY.w:
                 Input.up = true;
@@ -112,6 +115,7 @@ class Input {
         e.preventDefault()
         const text = (e.clipboardData || window.clipboardData)?.getData("text")
         Graph.deserialize(text.trim())
+        App.updateMenu()
         if (App.pause) render()
     }
 }

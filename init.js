@@ -29,6 +29,9 @@ Graph.deserialize(`strict graph {
     node2 -- node10;
 }`)
 
+App.menu = menu;
+App.updateMenu();
+
 frame(0);
 
 window.addEventListener(EVENT.resize, Screen.resizeHandler);

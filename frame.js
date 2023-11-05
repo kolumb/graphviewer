@@ -20,6 +20,7 @@ function render() {
     Ctx.fillRect(new Vector(10,10), new Vector(10, 10))
 
     Graph.render()
+    Ctx.fillRect(Graph.getCenterOfMass(), new Vector(10, 10))
 
     Ctx.restore()
 }

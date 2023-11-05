@@ -25,6 +25,11 @@ class Graph {
         Graph.selected.color = "black"
         Graph.selected = null
     }
+    static getCenterOfMass() {
+        return Graph.nodes.reduce((acc, node) => {
+            return acc.add(node.pos)
+        }, new Vector()).scale(1/Graph.nodes.length)
+    }
     static serialize() {
         let result = "strict graph {\n"
         result += Graph.nodes.map(node => {

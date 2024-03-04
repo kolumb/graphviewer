@@ -16,6 +16,7 @@ class App {
     static placeFromUnstaged() {
         const nextNode = App.unstaged.nodes.shift()
         if (nextNode) {
+            nextNode.pos.setFrom(Graph.getCenterOfMass().add(Vector.random()))
             Graph.nodes.push(nextNode)
             const nextEdges = App.unstaged.edges.filter(e =>
                 (e.node1.id === nextNode.id)

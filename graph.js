@@ -26,6 +26,7 @@ class Graph {
         Graph.selected = null
     }
     static getCenterOfMass() {
+        if (Graph.nodes.length === 0) return new Vector()
         return Graph.nodes.reduce((acc, node) => {
             return acc.add(node.pos)
         }, new Vector()).scale(1/Graph.nodes.length)

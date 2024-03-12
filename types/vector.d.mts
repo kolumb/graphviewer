@@ -34,5 +34,6 @@ declare class Vector {
     static fromAngle(a: number): Vector;
     static random(): Vector;
     static zero: Vector;
+    drawFrom(v: Vector): void;
 }
 export { Vector };

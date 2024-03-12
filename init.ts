@@ -45,12 +45,39 @@ App.updateMenu();
 
 frame(0);
 
-window.addEventListener(EVENT.resize as unknown as keyof WindowEventMap, Screen.resizeHandler as EventListenerOrEventListenerObject);
-canvas?.addEventListener(EVENT.pointerdown as unknown as keyof ElementEventMap, Input.pointerdownHandler as EventListenerOrEventListenerObject);
-canvas?.addEventListener(EVENT.pointermove as unknown as keyof ElementEventMap, Input.pointermoveHandler as EventListenerOrEventListenerObject);
-window.addEventListener(EVENT.pointerup as unknown as keyof WindowEventMap, Input.pointerupHandler as EventListenerOrEventListenerObject);
-window.addEventListener(EVENT.keydown as unknown as keyof WindowEventMap, Input.keydownHandler as EventListenerOrEventListenerObject);
-window.addEventListener(EVENT.keyup as unknown as keyof WindowEventMap, Input.keyupHandler as EventListenerOrEventListenerObject);
-window.addEventListener(EVENT.wheel as unknown as keyof WindowEventMap, Input.wheelHandler as EventListenerOrEventListenerObject);
-window.addEventListener(EVENT.copy as unknown as keyof WindowEventMap, Input.copyHandler as EventListenerOrEventListenerObject);
-window.addEventListener(EVENT.paste as unknown as keyof WindowEventMap, Input.pasteHandler as EventListenerOrEventListenerObject);
+window.addEventListener(
+  EVENT.resize as unknown as keyof WindowEventMap,
+  Screen.resizeHandler as EventListenerOrEventListenerObject
+);
+canvas?.addEventListener(
+  EVENT.pointerdown as unknown as keyof ElementEventMap,
+  Input.pointerdownHandler as EventListenerOrEventListenerObject
+);
+canvas?.addEventListener(
+  EVENT.pointermove as unknown as keyof ElementEventMap,
+  Input.pointermoveHandler as EventListenerOrEventListenerObject
+);
+window.addEventListener(
+  EVENT.pointerup as unknown as keyof WindowEventMap,
+  Input.pointerupHandler as EventListenerOrEventListenerObject
+);
+window.addEventListener(
+  EVENT.keydown as unknown as keyof WindowEventMap,
+  Input.keydownHandler as EventListenerOrEventListenerObject
+);
+window.addEventListener(
+  EVENT.keyup as unknown as keyof WindowEventMap,
+  Input.keyupHandler as EventListenerOrEventListenerObject
+);
+window.addEventListener(
+  EVENT.wheel as unknown as keyof WindowEventMap,
+  Input.wheelHandler as EventListenerOrEventListenerObject
+);
+window.addEventListener(
+  EVENT.copy as unknown as keyof WindowEventMap,
+  Input.copyHandler as EventListenerOrEventListenerObject
+);
+window.addEventListener(
+  EVENT.paste as unknown as keyof WindowEventMap,
+  Input.pasteHandler as EventListenerOrEventListenerObject
+);

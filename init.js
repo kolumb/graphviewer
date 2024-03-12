@@ -8,10 +8,12 @@ import { frame } from "frame.mjs";
 import { Input, EVENT } from "input.mjs";
 const canvas = document.querySelector("#Canvas");
 if (canvas === null) {
-  assert(false, "Can't find canvas");
-} else {
-  const ctx = canvas.getContext("2d", { alpha: false });
-  if (ctx !== null) Ctx.ctx = ctx;
+    assert(false, "Can't find canvas");
+}
+else {
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (ctx !== null)
+        Ctx.ctx = ctx;
 }
 const menu = document.querySelector("#side-menu");
 Screen.updateSize();
@@ -36,7 +38,8 @@ Graph.deserialize(`strict graph {
     node4 -- node2;
     node2 -- node10;
 }`);
-if (menu) App.menu = menu;
+if (menu)
+    App.menu = menu;
 App.updateMenu();
 frame(0);
 window.addEventListener(EVENT.resize, Screen.resizeHandler);

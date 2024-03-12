@@ -5,7 +5,7 @@ import { Camera } from "camera.mjs";
 import { Graph } from "graph.mjs";
 import { App } from "app.mjs";
 import { frame } from "frame.mjs";
-import { Input, EVENT } from "event.mjs";
+import { Input, EVENT } from "input.mjs";
 
 const canvas: HTMLCanvasElement | null = document.querySelector("#Canvas");
 if (canvas === null) {

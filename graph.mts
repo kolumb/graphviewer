@@ -7,8 +7,8 @@ import {Edge} from "edge.mjs"
 enum ConnectionTypes {undefined, undirected, directed}
 
 class Graph {
-    static nodes = []
-    static edges = []
+    static nodes: Node[] = []
+    static edges: Edge[] = []
     static hovered: Node
     static selected: Node
     static selectedShift = new Vector();
@@ -23,7 +23,7 @@ class Graph {
         Graph.nodes.forEach(node => node.update(lag))
         Graph.edges.forEach(edge => edge.update(lag))
     }
-    static render(lag: number) {
+    static render() {
         Graph.edges.forEach(edge => edge.render())
         Graph.nodes.forEach(node => node.render())
     }
@@ -241,3 +241,4 @@ class Graph {
         App.unstaged.nodes.push(new Node(id, pos, label))
     }
 }
+export {Graph}

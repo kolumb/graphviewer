@@ -6,7 +6,7 @@ const ctx = canvas.getContext("2d", { alpha: false });
 Ctx.ctx = ctx;
 
 Screen.updateSize();
-Camera.pos = Screen.center.flip()
+Camera.pos = Screen.center.flip();
 
 Graph.deserialize(`strict graph {
     node0 [x=  -30, y=  -48, label="App"];
@@ -27,7 +27,7 @@ Graph.deserialize(`strict graph {
     node6 -- node0;
     node4 -- node2;
     node2 -- node10;
-}`)
+}`);
 
 App.menu = menu;
 App.updateMenu();

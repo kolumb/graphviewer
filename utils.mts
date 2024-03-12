@@ -1,4 +1,4 @@
-export function assert(condition: boolean, message: string) {
+export function assert(condition: boolean, message?: string) {
     if (!condition) {
         throw new Error(message)
     }
@@ -6,15 +6,16 @@ export function assert(condition: boolean, message: string) {
 export function todo(description: string|undefined) {
     assert(false, "Not implemented. " + (description ? description : ""))
 }
-// function Enum(list) {
-//     return list.reduce(
-//         (enumeration, element, i) => {
-//             enumeration[element] = element;
-//             return enumeration;
-//         },
-//         { length: list.length }
-//     );
-// }
+type keyValuePair = {[key: string]: string | number}
+export function Enum(list: string[]) {
+    return list.reduce(
+        (enumeration: keyValuePair, element, i) => {
+            enumeration[element] = element;
+            return enumeration;
+        },
+        { "length": list.length } as keyValuePair
+    );
+}
 
 // function mod(n, limit) {
 //     return ((n % limit) + limit) % limit;

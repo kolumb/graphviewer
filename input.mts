@@ -249,4 +249,4 @@ const KEY = {
   f12: "F12",
 };
 
-export {Input, EVENT}
+export { Input, EVENT };

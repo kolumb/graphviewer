@@ -1,20 +1,20 @@
 export function assert(condition: boolean, message?: string) {
-    if (!condition) {
-        throw new Error(message)
-    }
+  if (!condition) {
+    throw new Error(message);
+  }
 }
-export function todo(description: string|undefined) {
-    assert(false, "Not implemented. " + (description ? description : ""))
+export function todo(description: string | undefined) {
+  assert(false, "Not implemented. " + (description ? description : ""));
 }
-type keyValuePair = {[key: string]: string | number}
+type keyValuePair = { [key: string]: string | number };
 export function Enum(list: string[]) {
-    return list.reduce(
-        (enumeration: keyValuePair, element, i) => {
-            enumeration[element] = element;
-            return enumeration;
-        },
-        { "length": list.length } as keyValuePair
-    );
+  return list.reduce(
+    (enumeration: keyValuePair, element, i) => {
+      enumeration[element] = element;
+      return enumeration;
+    },
+    { length: list.length } as keyValuePair
+  );
 }
 
 // function mod(n, limit) {

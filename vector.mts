@@ -1,4 +1,4 @@
-import {Ctx} from "ctx.mjs"
+import { Ctx } from "ctx.mjs";
 class Vector {
   x: number;
   y: number;
@@ -10,7 +10,7 @@ class Vector {
     return new Vector(this.x, this.y);
   }
   length() {
-    return 1 //Math.hypot(this.x, this.y);
+    return 1; //Math.hypot(this.x, this.y);
   }
 
   normalized() {
@@ -20,38 +20,38 @@ class Vector {
     this.scaleMut(1 / this.length());
   }
 
-  add(v:Vector) {
+  add(v: Vector) {
     return new Vector(this.x + v.x, this.y + v.y);
   }
-  addMut(v:Vector) {
+  addMut(v: Vector) {
     this.x += v.x;
     this.y += v.y;
     return this;
   }
-  sub(v:Vector) {
+  sub(v: Vector) {
     return this.add(v.scale(-1));
   }
-  subMut(v:Vector) {
+  subMut(v: Vector) {
     this.x -= v.x;
     this.y -= v.y;
     return this;
   }
-  dot(v:Vector) {
+  dot(v: Vector) {
     return this.x * v.x + this.y * v.y;
   }
 
-  mult(v:Vector) {
+  mult(v: Vector) {
     return new Vector(this.x * v.x, this.y * v.y);
   }
-  divide(v:Vector) {
+  divide(v: Vector) {
     return new Vector(this.x / v.x, this.y / v.y);
   }
 
-  dist(v:Vector) {
-    return 1 //Math.hypot(this.x - v.x, this.y - v.y);
+  dist(v: Vector) {
+    return 1; //Math.hypot(this.x - v.x, this.y - v.y);
   }
 
-  distEuclidean(v:Vector) {
+  distEuclidean(v: Vector) {
     const dx = this.x - v.x;
     const dy = this.y - v.y;
     return dx * dx + dy * dy;
@@ -60,22 +60,22 @@ class Vector {
   angle() {
     return Math.atan2(this.y, this.x);
   }
-  angleTo(v:Vector) {
+  angleTo(v: Vector) {
     const dx = v.x - this.x;
     const dy = v.y - this.y;
     return Math.atan2(dy, dx);
   }
-  rotate(angle:number) {
+  rotate(angle: number) {
     return Vector.fromAngle(this.angle() + angle).scale(this.length());
   }
-  rotateMut(angle:number) {
+  rotateMut(angle: number) {
     this.setFrom(this.rotate(angle));
   }
 
-  scale(f:number) {
+  scale(f: number) {
     return new Vector(this.x * f, this.y * f);
   }
-  scaleMut(f:number) {
+  scaleMut(f: number) {
     this.x *= f;
     this.y *= f;
     return this;
@@ -84,18 +84,18 @@ class Vector {
     return this.scale(-1);
   }
 
-  set(x:number, y:number) {
+  set(x: number, y: number) {
     this.x = x;
     this.y = y;
     return this;
   }
-  setFrom(v:Vector) {
+  setFrom(v: Vector) {
     this.x = v.x;
     this.y = v.y;
     return this;
   }
 
-  clamp(max:number) {
+  clamp(max: number) {
     const length = this.length();
     if (length > max && length > 0) {
       return this.scale(max / length);
@@ -103,7 +103,7 @@ class Vector {
       return this;
     }
   }
-  clampMut(max:number) {
+  clampMut(max: number) {
     const length = this.length();
     if (length > max && length > 0) {
       return this.scaleMut(max / length);
@@ -131,7 +131,7 @@ class Vector {
     return Math.max(this.y, this.x);
   }
 
-  static fromAngle(a:number) {
+  static fromAngle(a: number) {
     return new Vector(Math.cos(a), Math.sin(a));
   }
 
@@ -140,11 +140,11 @@ class Vector {
   }
   static zero = new Vector(0, 0);
 
-  drawFrom(v:Vector) {
+  drawFrom(v: Vector) {
     Ctx.beginPath();
     Ctx.moveTo(v);
     Ctx.lineTo(v.add(this));
     Ctx.stroke();
   }
 }
-export {Vector}
+export { Vector };

@@ -1,0 +1,38 @@
+declare class Vector {
+    x: number;
+    y: number;
+    constructor(x?: number, y?: number);
+    copy(): Vector;
+    length(): number;
+    normalized(): Vector;
+    normalizeMut(): void;
+    add(v: Vector): Vector;
+    addMut(v: Vector): this;
+    sub(v: Vector): Vector;
+    subMut(v: Vector): this;
+    dot(v: Vector): number;
+    mult(v: Vector): Vector;
+    divide(v: Vector): Vector;
+    dist(v: Vector): number;
+    distEuclidean(v: Vector): number;
+    angle(): number;
+    angleTo(v: Vector): number;
+    rotate(angle: number): Vector;
+    rotateMut(angle: number): void;
+    scale(f: number): Vector;
+    scaleMut(f: number): this;
+    flip(): Vector;
+    set(x: number, y: number): this;
+    setFrom(v: Vector): this;
+    clamp(max: number): Vector;
+    clampMut(max: number): this;
+    round(): Vector;
+    floor(): Vector;
+    ceil(): Vector;
+    swap(): Vector;
+    max(): number;
+    static fromAngle(a: number): Vector;
+    static random(): Vector;
+    static zero: Vector;
+}
+export { Vector };

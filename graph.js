@@ -1,21 +1,21 @@
+import { App } from "app.mjs";
+import { assert, Enum } from "utils.mjs";
+import { Edge } from "edge.mjs";
+import { Node } from "node.mjs";
+import { Vector } from "vector.mjs";
+var ConnectionTypes;
+(function (ConnectionTypes) {
+  ConnectionTypes[(ConnectionTypes["undefined"] = 0)] = "undefined";
+  ConnectionTypes[(ConnectionTypes["undirected"] = 1)] = "undirected";
+  ConnectionTypes[(ConnectionTypes["directed"] = 2)] = "directed";
+})(ConnectionTypes || (ConnectionTypes = {}));
 class Graph {
-  static nodes = [];
-  static edges = [];
-  static hovered;
-  static selected;
-  static selectedShift = new Vector();
-  static selectedOriginalPos = new Vector();
-  static selectedList = [];
-  static repelling = 5;
-  static maxSpeed = 1;
-  static attraction = 0.2;
-  static edgeTension = 0.005;
   static update(lag) {
     Graph.hovered = null;
     Graph.nodes.forEach((node) => node.update(lag));
     Graph.edges.forEach((edge) => edge.update(lag));
   }
-  static render(lag) {
+  static render() {
     Graph.edges.forEach((edge) => edge.render());
     Graph.nodes.forEach((node) => node.render());
   }
@@ -27,7 +27,7 @@ class Graph {
     Graph.selected.color = "blue";
   }
   static deselect() {
-    Graph.selected.color = "black";
+    if (Graph.selected) Graph.selected.color = "black";
     Graph.selected = null;
   }
   static getCenterOfMass() {
@@ -79,14 +79,13 @@ class Graph {
       "separator",
       "string",
     ]);
-    const connectionTypes = Enum(["undefined", "undirected", "directed"]);
     for (let i = 1; i < lines.length - 1; i++) {
       const line = lines[i];
       let currentState = states.trim;
       let token = "";
       let id1 = "";
       let id2 = "";
-      let connectionType = connectionTypes.undefined;
+      let connectionType = ConnectionTypes.undefined;
       for (let j = 0; j < line.length; j++) {
         const c = line[j];
         // console.log(c)
@@ -103,7 +102,7 @@ class Graph {
                 break;
               case "-":
                 assert(
-                  connectionType === connectionType.undefined,
+                  connectionType === ConnectionTypes.undefined,
                   id1 === ""
                     ? "Illigal start of node name"
                     : "Second connection is not supported"
@@ -112,7 +111,7 @@ class Graph {
               case "\r":
               case ";":
                 assert(
-                  connectionType === connectionTypes.undefined || id2 !== "",
+                  connectionType === ConnectionTypes.undefined || id2 !== "",
                   "Expected second node name"
                 );
                 break;
@@ -141,7 +140,7 @@ class Graph {
                 currentState = states.trim;
                 if (id1 !== "") {
                   assert(id2 === "");
-                  assert(connectionType !== connectionType.undefined);
+                  assert(connectionType !== ConnectionTypes.undefined);
                   id2 = token;
                 } else {
                   id1 = token;
@@ -192,11 +191,11 @@ class Graph {
           case states.separator:
             switch (c) {
               case "-":
-                connectionType = connectionTypes.undirected;
+                connectionType = ConnectionTypes.undirected;
                 currentState = states.trim;
                 break;
               case ">":
-                connectionType = connectionTypes.directed;
+                connectionType = ConnectionTypes.directed;
                 currentState = states.trim;
                 break;
               case "\r":
@@ -219,7 +218,7 @@ class Graph {
                 currentState = states.attributesOrSeparator;
                 if (id1 !== "") {
                   assert(id2 === "");
-                  assert(connectionType !== connectionType.undefined);
+                  assert(connectionType !== ConnectionTypes.undefined);
                   id2 = token;
                 } else {
                   id1 = token;
@@ -242,9 +241,8 @@ class Graph {
           currentState == states.attributesOrSeparator,
         "Unexpected state after deserialization " + currentState
       );
-      assert(connectionType === connectionTypes.undefined || id2 !== "");
-
-      if (connectionType !== connectionTypes.undefined) {
+      assert(connectionType === ConnectionTypes.undefined || id2 !== "");
+      if (connectionType !== ConnectionTypes.undefined) {
         let node1 = App.unstaged.nodes.find((node) => `${node.id}` === id1);
         if (!node1) {
           const pos = new Vector(
@@ -264,7 +262,7 @@ class Graph {
           App.unstaged.nodes.push(node2);
         }
         App.unstaged.edges.push(
-          new Edge(node1, node2, connectionType === connectionTypes.directed)
+          new Edge(node1, node2, connectionType === ConnectionTypes.directed)
         );
       }
     }
@@ -274,13 +272,21 @@ class Graph {
     let [x, y, label] = attributes
       .split(", ")
       .map((pair) => pair.split("=").slice(1).join("=").trim());
-    x = parseInt(x);
-    y = parseInt(y);
     label = label
       .slice(1, label.length - 1)
       .replaceAll('\\"', '"')
       .replaceAll("\\\\", "\\");
-    const pos = new Vector(x, y);
+    const pos = new Vector(parseInt(x), parseInt(y));
     App.unstaged.nodes.push(new Node(id, pos, label));
   }
 }
+Graph.nodes = [];
+Graph.edges = [];
+Graph.selectedShift = new Vector();
+Graph.selectedOriginalPos = new Vector();
+Graph.selectedList = [];
+Graph.repelling = 5;
+Graph.maxSpeed = 1;
+Graph.attraction = 0.2;
+Graph.edgeTension = 0.005;
+export { Graph };

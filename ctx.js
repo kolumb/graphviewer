@@ -1,13 +1,10 @@
 class Ctx {
-  static ctx = undefined;
-
   static fillStyle(style) {
     Ctx.ctx.fillStyle = style;
   }
   static strokeStyle(style) {
     Ctx.ctx.strokeStyle = style;
   }
-
   static beginPath() {
     Ctx.ctx.beginPath();
   }
@@ -72,7 +69,6 @@ class Ctx {
   static rect(topLeft, size) {
     Ctx.ctx.rect(topLeft.x, topLeft.y, size.x, size.y);
   }
-
   static lineWidth(width) {
     Ctx.ctx.lineWidth = width;
   }
@@ -106,7 +102,6 @@ class Ctx {
   static direction(direction) {
     Ctx.ctx.direction = direction;
   }
-
   static clearRect(topLeft, size) {
     Ctx.ctx.clearRect(topLeft.x, topLeft.y, size.x, size.y);
   }
@@ -116,7 +111,6 @@ class Ctx {
   static strokeRect(topLeft, size) {
     Ctx.ctx.strokeRect(topLeft.x, topLeft.y, size.x, size.y);
   }
-
   static fill() {
     Ctx.ctx.fill();
   }
@@ -151,3 +145,4 @@ class Ctx {
     Ctx.ctx.restore();
   }
 }
+export { Ctx };

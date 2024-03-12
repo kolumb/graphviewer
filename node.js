@@ -1,14 +1,15 @@
+import { App } from "./app.mjs";
+import { Ctx } from "./ctx.mjs";
+import { Graph } from "./graph.mjs";
+import { Vector } from "./vector.mjs";
 class Node {
-  static idCounter = 0;
-  static height = 15;
-  color = "black";
   constructor(id, pos = new Vector(), label = "") {
+    this.color = "black";
     this.id = id;
     this.pos = pos;
     this.label = label;
     this.textWidth = Ctx.measureText(label).width;
   }
-
   checkCollision(pos) {
     const dist = this.pos.sub(pos);
     return (
@@ -18,7 +19,6 @@ class Node {
       dist.y < Node.height
     );
   }
-
   update(lag) {
     if (this.checkCollision(App.cursor)) {
       if (Graph.selected !== this) {
@@ -53,7 +53,8 @@ class Node {
       new Vector(this.textWidth / 2 + 10, Node.height),
       0,
       0,
-      Math.PI * 2
+      Math.PI * 2,
+      true
     );
     Ctx.fillStyle(this === Graph.hovered ? "#ddd" : "#ccc");
     Ctx.fill();
@@ -67,3 +68,6 @@ class Node {
     Ctx.restore();
   }
 }
+Node.idCounter = 0;
+Node.height = 15;
+export { Node };

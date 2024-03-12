@@ -1,18 +1,16 @@
+import { Camera } from "./camera.mjs";
+import { Edge } from "./edge.mjs";
+import { Graph } from "./graph.mjs";
+import { Input } from "./input.mjs";
+import { Vector } from "./vector.mjs";
+var States;
+(function (States) {
+  States[(States["default"] = 0)] = "default";
+  States[(States["panning"] = 1)] = "panning";
+  States[(States["dragging"] = 2)] = "dragging";
+  States[(States["paused"] = 3)] = "paused";
+})(States || (States = {}));
 class App {
-  static pause = false;
-
-  static cursor = new Vector();
-
-  static lastClickHandled = true;
-  static potentialConnectionToggle = false;
-
-  static states = Enum(["default", "panning", "dragging", "paused"]);
-  static state = App.states.default;
-
-  static unstaged = { edges: [], nodes: [] };
-
-  static menu = undefined;
-
   static placeFromUnstaged() {
     const nextNode = App.unstaged.nodes.shift();
     if (nextNode) {
@@ -33,18 +31,16 @@ class App {
     }
     App.updateMenu();
   }
-
   static updateCursor() {
     App.cursor.setFrom(
       Input.pointer.add(Camera.pos.add(Camera.shift)).scale(1 / Camera.scale)
     );
   }
-
   static update(lag) {
     if (!App.lastClickHandled) {
       App.lastClickHandled = true;
       if (App.pause) {
-        conosole.log("TODO: Skipping in pause");
+        console.log("TODO: Skipping in pause");
         return;
       }
       if (Graph.hovered && Graph.hovered.checkCollision(App.cursor)) {
@@ -52,13 +48,15 @@ class App {
         Graph.select(Graph.hovered);
         Graph.hovered = null;
         Graph.selectedOriginalPos.setFrom(Graph.selected.pos);
-        canvas.classList.add("dragging");
+        // TODO: get canvas from App
+        // canvas.classList.add("dragging")
       } else {
         if (Graph.selected) {
           Graph.selected.color = "orange";
           Graph.selected = null;
         }
-        canvas.classList.add("moving");
+        // TODO: get canvas from App
+        // canvas.classList.add("moving")
       }
     }
     if (Input.downState) {
@@ -70,27 +68,29 @@ class App {
       }
     } else {
       if (Graph.hovered) {
-        if (!canvas.classList.contains("hovering")) {
-          canvas.classList.add("hovering");
-        }
+        // TODO: get canvas from App
+        // if (!canvas.classList.contains("hovering")) {
+        //     canvas.classList.add("hovering")
+        // }
       } else {
-        if (canvas.classList.contains("hovering")) {
-          canvas.classList.remove("hovering");
-        }
+        // TODO: get canvas from App
+        // if (canvas.classList.contains("hovering")) {
+        //     canvas.classList.remove("hovering")
+        // }
       }
     }
   }
-
   static applyShift() {
     if (Graph.selected) {
       Graph.deselect();
-      canvas.classList.remove("dragging");
+      // TODO: get canvas from App
+      // canvas.classList.remove("dragging")
     } else {
       Camera.applyShift();
-      canvas.classList.remove("moving");
+      // TODO: get canvas from App
+      // canvas.classList.remove("moving")
     }
   }
-
   static connectOveralpped() {
     if (Graph.selected && Graph.hovered && Graph.selected != Graph.hovered) {
       const existingEgde = Graph.edges.find(
@@ -100,8 +100,6 @@ class App {
           (e.node1.id === Graph.hovered.id && e.node2.id === Graph.selected.id)
       );
       if (existingEgde) {
-        existingEgde.node1 = null;
-        existingEgde.node2 = null;
         Graph.edges.splice(Graph.edges.indexOf(existingEgde), 1);
       } else {
         Graph.edges.push(new Edge(Graph.selected, Graph.hovered));
@@ -109,7 +107,6 @@ class App {
       Graph.selected.pos.setFrom(Graph.selectedOriginalPos);
     }
   }
-
   static updateMenu() {
     while (App.menu.firstChild) {
       App.menu.removeChild(App.menu.firstChild);
@@ -127,3 +124,10 @@ class App {
     });
   }
 }
+App.pause = false;
+App.cursor = new Vector();
+App.lastClickHandled = true;
+App.potentialConnectionToggle = false;
+App.state = States.default;
+App.unstaged = { edges: [], nodes: [] };
+export { App };

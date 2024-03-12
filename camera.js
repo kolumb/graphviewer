@@ -1,15 +1,12 @@
+import { Vector } from "vector.mjs";
+import { Input } from "input.mjs";
+import { App } from "app.mjs";
 class Camera {
-  static pos = new Vector();
-  static shift = new Vector();
-  static speed = 10;
-  static scale = 1;
-
   static updateScale() {
     const oldScale = Camera.scale;
     Camera.scale = 10 ** (Input.zoom / 2000);
     Camera.pos.addMut(App.cursor.scale(Camera.scale - oldScale));
   }
-
   static update(lag) {
     if (Input.left) {
       Camera.pos.x -= Camera.speed * lag;
@@ -32,3 +29,8 @@ class Camera {
     Camera.shift.setFrom(Vector.zero);
   }
 }
+Camera.pos = new Vector();
+Camera.shift = new Vector();
+Camera.speed = 10;
+Camera.scale = 1;
+export { Camera };

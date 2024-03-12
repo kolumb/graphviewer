@@ -1,17 +1,9 @@
-"use strict";
-
+import { App } from "./app.mjs";
+import { Camera } from "./camera.mjs";
+import { frame, render } from "./frame.mjs";
+import { Graph } from "./graph.mjs";
+import { Vector } from "./vector.mjs";
 class Input {
-  static up = false;
-  static down = false;
-  static left = false;
-  static right = false;
-  static pointer = new Vector();
-  static downState = false;
-  static zoom = 0;
-  static downPos = new Vector();
-  static pointerIDs = []; // TODO: Fix bugs in multitouch zoom
-  static lastDist = 0;
-
   static pointerdownHandler(e) {
     if (Input.pointerIDs.length !== 1) {
       Input.pointer.set(e.offsetX, e.offsetY); // TODO: Check if e.clientY - canvas.offsetTop will be useful for embedding
@@ -51,18 +43,18 @@ class Input {
       App.connectOveralpped();
       App.applyShift();
     }
-    const index = Input.pointerIDs.find((p) => p.id === e.pointerId);
+    const index = Input.pointerIDs.findIndex((p) => p.id === e.pointerId);
     Input.pointerIDs.splice(index, 1);
   }
-
   static keydownHandler(e) {
     switch (e.code) {
       case KEY.space:
-        if (e.target.tagName === "BUTTON") return;
+        if (e.target instanceof Element && e.target.tagName === "BUTTON")
+          return;
       case KEY.p:
         App.pause = !App.pause;
         if (App.pause === false) {
-          frame();
+          frame(performance.now());
         }
         break;
       case KEY.n:
@@ -106,40 +98,46 @@ class Input {
         break;
     }
   }
-
   static wheelHandler(e) {
     if (App.pause) return;
     Input.zoom += e.deltaY;
     Camera.updateScale();
   }
-
   static copyHandler(e) {
-    e.clipboardData.setData("text/plain", Graph.serialize());
+    e.clipboardData?.setData("text/plain", Graph.serialize());
     e.preventDefault();
   }
-
   static pasteHandler(e) {
     e.preventDefault();
-    const text = (e.clipboardData || window.clipboardData)?.getData("text");
+    const text = e.clipboardData?.getData("text") ?? "";
     Graph.deserialize(text.trim());
     App.updateMenu();
     if (App.pause) render();
   }
 }
-
-const EVENT = Enum([
-  "resize",
-  "pointerdown",
-  "pointermove",
-  "pointerup",
-  "keydown",
-  "keyup",
-  "click",
-  "wheel",
-  "copy",
-  "paste",
-]);
-
+Input.up = false;
+Input.down = false;
+Input.left = false;
+Input.right = false;
+Input.pointer = new Vector();
+Input.downState = false;
+Input.zoom = 0;
+Input.downPos = new Vector();
+Input.pointerIDs = []; // TODO: Check if there's still bug in multitouch zoom
+Input.lastDist = 0;
+var EVENT;
+(function (EVENT) {
+  EVENT[(EVENT["resize"] = 0)] = "resize";
+  EVENT[(EVENT["pointerdown"] = 1)] = "pointerdown";
+  EVENT[(EVENT["pointermove"] = 2)] = "pointermove";
+  EVENT[(EVENT["pointerup"] = 3)] = "pointerup";
+  EVENT[(EVENT["keydown"] = 4)] = "keydown";
+  EVENT[(EVENT["keyup"] = 5)] = "keyup";
+  EVENT[(EVENT["click"] = 6)] = "click";
+  EVENT[(EVENT["wheel"] = 7)] = "wheel";
+  EVENT[(EVENT["copy"] = 8)] = "copy";
+  EVENT[(EVENT["paste"] = 9)] = "paste";
+})(EVENT || (EVENT = {}));
 const KEY = {
   space: "Space",
   up: "ArrowUp",
@@ -193,19 +191,53 @@ const KEY = {
   audioVolumeUp: "AudioVolumeUp",
   mediaPlayPause: "MediaPlayPause",
   mediaStop: "MediaStop",
+  a: "KeyA",
+  b: "KeyB",
+  c: "KeyC",
+  d: "KeyD",
+  e: "KeyE",
+  f: "KeyF",
+  g: "KeyG",
+  h: "KeyH",
+  i: "KeyI",
+  j: "KeyJ",
+  k: "KeyK",
+  l: "KeyL",
+  m: "KeyM",
+  n: "KeyN",
+  o: "KeyO",
+  p: "KeyP",
+  q: "KeyQ",
+  r: "KeyR",
+  s: "KeyS",
+  t: "KeyT",
+  u: "KeyU",
+  v: "KeyV",
+  w: "KeyW",
+  x: "KeyX",
+  y: "KeyY",
+  z: "KeyZ",
+  digit1: "Digit1",
+  digit2: "Digit2",
+  digit3: "Digit3",
+  digit4: "Digit4",
+  digit5: "Digit5",
+  digit6: "Digit6",
+  digit7: "Digit7",
+  digit8: "Digit8",
+  digit9: "Digit9",
+  digit0: "Digit0",
+  f1: "F1",
+  f2: "F2",
+  f3: "F3",
+  f4: "F4",
+  f5: "F5",
+  f6: "F6",
+  f7: "F7",
+  f8: "F8",
+  f9: "F9",
+  f10: "F10",
+  f11: "F11",
+  f12: "F12",
 };
-for (
-  let charCode = "a".charCodeAt(0);
-  charCode <= "z".charCodeAt(0);
-  charCode++
-) {
-  KEY[String.fromCharCode(charCode)] =
-    "Key" + String.fromCharCode(charCode).toUpperCase();
-}
-for (let i = 0; i < 10; i++) {
-  KEY[`digit${i}`] = `Digit${i}`;
-  KEY[`num${i}`] = `Numpad${i}`;
-}
-for (let i = 1; i <= 12; i++) {
-  KEY[`f${i}`] = `F${i}`;
-}
+export { Input, EVENT };

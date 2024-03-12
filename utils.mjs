@@ -1,19 +1,16 @@
 export function assert(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
+    if (!condition) {
+        throw new Error(message);
+    }
 }
 export function todo(description) {
-  assert(false, "Not implemented. " + (description ? description : ""));
+    assert(false, "Not implemented. " + (description ? description : ""));
 }
 export function Enum(list) {
-  return list.reduce(
-    (enumeration, element, i) => {
-      enumeration[element] = element;
-      return enumeration;
-    },
-    { length: list.length }
-  );
+    return list.reduce((enumeration, element, i) => {
+        enumeration[element] = element;
+        return enumeration;
+    }, { length: list.length });
 }
 // function mod(n, limit) {
 //     return ((n % limit) + limit) % limit;

@@ -248,3 +248,5 @@ const KEY = {
   f11: "F11",
   f12: "F12",
 };
+
+export {Input, EVENT}

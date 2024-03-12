@@ -1,16 +1,16 @@
+import {App} from "app.mjs"
+import {assert, Enum} from "utils.mjs"
+import {Edge} from "edge.mjs"
 import {Node} from "node.mjs"
 import {Vector} from "vector.mjs"
-import {assert, Enum} from "utils.mjs"
-import {App} from "app.mjs"
-import {Edge} from "edge.mjs"
 
 enum ConnectionTypes {undefined, undirected, directed}
 
 class Graph {
     static nodes: Node[] = []
     static edges: Edge[] = []
-    static hovered: Node
-    static selected: Node
+    static hovered: Node | null
+    static selected: Node | null
     static selectedShift = new Vector();
     static selectedOriginalPos = new Vector();
     static selectedList = [];
@@ -35,7 +35,7 @@ class Graph {
         Graph.selected.color = "blue"
     }
     static deselect() {
-        Graph.selected.color = "black"
+        if (Graph.selected) Graph.selected.color = "black"
         Graph.selected = null
     }
     static getCenterOfMass() {

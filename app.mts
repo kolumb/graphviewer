@@ -1,9 +1,9 @@
-import { Graph } from "./graph.mjs";
-import { Vector } from "./vector.mjs";
-import {Edge} from "./edge.mjs"
-import {Node} from "./node.mjs"
-import {Input} from "./input.mjs"
 import {Camera} from "./camera.mjs"
+import {Edge} from "./edge.mjs"
+import { Graph } from "./graph.mjs";
+import {Input} from "./input.mjs"
+import {Node} from "./node.mjs"
+import { Vector } from "./vector.mjs";
 enum States { default, panning, dragging, paused}
 class App {
     static pause = false;
@@ -20,7 +20,7 @@ class App {
     static menu: Element;
 
     static placeFromUnstaged() {
-        const nextNode: Node = App.unstaged.nodes.shift()
+        const nextNode: Node | undefined = App.unstaged.nodes.shift()
         if (nextNode) {
             nextNode.pos.setFrom(Graph.getCenterOfMass().add(Vector.random()))
             Graph.nodes.push(nextNode)
@@ -53,7 +53,7 @@ class App {
                 if (Graph.selected) console.log("Unreachable")
                 Graph.select(Graph.hovered)
                 Graph.hovered = null
-                Graph.selectedOriginalPos.setFrom(Graph.selected.pos)
+                Graph.selectedOriginalPos.setFrom(Graph.selected!.pos)
                 // TODO: get canvas from App
                 // canvas.classList.add("dragging")
             } else {
@@ -102,12 +102,10 @@ class App {
     static connectOveralpped() {
         if (Graph.selected && Graph.hovered && Graph.selected != Graph.hovered) {
             const existingEgde = Graph.edges.find(e =>
-                (e.node1.id === Graph.selected.id && e.node2.id === Graph.hovered.id)
-                || (e.node1.id === Graph.hovered.id && e.node2.id === Graph.selected.id)
+                (e.node1.id === Graph.selected!.id && e.node2.id === Graph.hovered!.id)
+                || (e.node1.id === Graph.hovered!.id && e.node2.id === Graph.selected!.id)
             )
             if (existingEgde) {
-                existingEgde.node1 = null
-                existingEgde.node2 = null
                 Graph.edges.splice(Graph.edges.indexOf(existingEgde), 1)
             } else {
                 Graph.edges.push(new Edge(Graph.selected, Graph.hovered))

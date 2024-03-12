@@ -40,17 +40,17 @@ Graph.deserialize(`strict graph {
     node2 -- node10;
 }`);
 
-App.menu = menu;
+if (menu) App.menu = menu;
 App.updateMenu();
 
 frame(0);
 
-window.addEventListener(EVENT.resize, Screen.resizeHandler);
-canvas?.addEventListener(EVENT.pointerdown, Input.pointerdownHandler);
-canvas?.addEventListener(EVENT.pointermove, Input.pointermoveHandler);
-window.addEventListener(EVENT.pointerup, Input.pointerupHandler);
-window.addEventListener(EVENT.keydown, Input.keydownHandler);
-window.addEventListener(EVENT.keyup, Input.keyupHandler);
-window.addEventListener(EVENT.wheel, Input.wheelHandler);
-window.addEventListener(EVENT.copy, Input.copyHandler);
-window.addEventListener(EVENT.paste, Input.pasteHandler);
+window.addEventListener(EVENT.resize as unknown as keyof WindowEventMap, Screen.resizeHandler as EventListenerOrEventListenerObject);
+canvas?.addEventListener(EVENT.pointerdown as unknown as keyof ElementEventMap, Input.pointerdownHandler as EventListenerOrEventListenerObject);
+canvas?.addEventListener(EVENT.pointermove as unknown as keyof ElementEventMap, Input.pointermoveHandler as EventListenerOrEventListenerObject);
+window.addEventListener(EVENT.pointerup as unknown as keyof WindowEventMap, Input.pointerupHandler as EventListenerOrEventListenerObject);
+window.addEventListener(EVENT.keydown as unknown as keyof WindowEventMap, Input.keydownHandler as EventListenerOrEventListenerObject);
+window.addEventListener(EVENT.keyup as unknown as keyof WindowEventMap, Input.keyupHandler as EventListenerOrEventListenerObject);
+window.addEventListener(EVENT.wheel as unknown as keyof WindowEventMap, Input.wheelHandler as EventListenerOrEventListenerObject);
+window.addEventListener(EVENT.copy as unknown as keyof WindowEventMap, Input.copyHandler as EventListenerOrEventListenerObject);
+window.addEventListener(EVENT.paste as unknown as keyof WindowEventMap, Input.pasteHandler as EventListenerOrEventListenerObject);

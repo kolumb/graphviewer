@@ -6,9 +6,14 @@ class Graph {
     static selectedShift = new Vector();
     static selectedOriginalPos = new Vector();
     static selectedList = [];
+	static repelling = 5
+	static maxSpeed = 1
+	static attraction = 0.2
+	static edgeTension = 0.005
     static update(lag) {
         Graph.hovered = null
         Graph.nodes.forEach(node => node.update(lag))
+        Graph.edges.forEach(edge => edge.update(lag))
     }
     static render(lag) {
         Graph.edges.forEach(edge => edge.render())

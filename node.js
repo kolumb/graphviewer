@@ -23,6 +23,19 @@ class Node {
 				Graph.hovered = this
 			}
 		}
+		const repellingForce = Graph.nodes.reduce((acc, node, i) => {
+			if (node === this) return acc
+			const dt = this.pos.sub(node.pos)
+			const length = dt.length()
+			const force = Graph.repelling / length
+			return acc.add(dt.normalized().scale(force))
+		}, new Vector())
+		// this.vel = repellingForce.clamp(Graph.maxSpeed)
+		this.pos.addMut(repellingForce.clamp(Graph.maxSpeed))
+		const centerOfMass = Graph.getCenterOfMass()
+		const hackToPreventInfinityInSingleNodeGraph = this.pos.add(Vector.random())
+		const attraction = centerOfMass.sub(hackToPreventInfinityInSingleNodeGraph).normalized().scale(Graph.attraction)
+		this.pos.addMut(attraction)
 	}
 	render() {
 		Ctx.save()

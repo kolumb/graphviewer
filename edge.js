@@ -5,6 +5,9 @@ class Edge {
 		this.directed = directed
 	}
 	update(lag) {
+		const dt = this.node1.pos.sub(this.node2.pos).scale(Graph.edgeTension)
+		if (this.directed === false) this.node1.pos.addMut(dt.scale(-0.5))
+		this.node2.pos.addMut(dt.scale(0.5))
 	}
 	render() {
 		Ctx.save()

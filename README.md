@@ -1,1 +1,1 @@
-## Demo: [kolumb.tk/tools/graphviewer](https://kolumb.tk/tools/graphviewer/)
+## Demo: [kolumb.github.io/graphviewer](https://kolumb.github.io/graphviewer/)

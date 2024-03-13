@@ -23,16 +23,7 @@ declare class Input {
     static copyHandler(e: ClipboardEvent): void;
     static pasteHandler(e: ClipboardEvent): void;
 }
-declare enum EVENT {
-    resize = 0,
-    pointerdown = 1,
-    pointermove = 2,
-    pointerup = 3,
-    keydown = 4,
-    keyup = 5,
-    click = 6,
-    wheel = 7,
-    copy = 8,
-    paste = 9
-}
+declare const EVENT: {
+    [key: string]: string | number;
+};
 export { Input, EVENT };

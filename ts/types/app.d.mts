@@ -18,6 +18,7 @@ declare class App {
         nodes: Node[];
     };
     static menu: Element;
+    static canvas: HTMLCanvasElement;
     static placeFromUnstaged(): void;
     static updateCursor(): void;
     static update(lag: number): void;

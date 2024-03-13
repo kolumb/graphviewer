@@ -8,7 +8,7 @@ class Vector {
         return new Vector(this.x, this.y);
     }
     length() {
-        return 1; //Math.hypot(this.x, this.y);
+        return Math.hypot(this.x, this.y);
     }
     normalized() {
         return this.scale(1 / this.length());
@@ -42,7 +42,7 @@ class Vector {
         return new Vector(this.x / v.x, this.y / v.y);
     }
     dist(v) {
-        return 1; //Math.hypot(this.x - v.x, this.y - v.y);
+        return Math.hypot(this.x - v.x, this.y - v.y);
     }
     distEuclidean(v) {
         const dx = this.x - v.x;

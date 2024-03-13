@@ -3,6 +3,7 @@ import { Camera } from "./camera.mjs";
 import { frame, render } from "./frame.mjs";
 import { Graph } from "./graph.mjs";
 import { Vector } from "./vector.mjs";
+import { Enum } from "./utils.mjs";
 class Input {
     static pointerdownHandler(e) {
         if (Input.pointerIDs.length !== 1) {
@@ -126,19 +127,18 @@ Input.zoom = 0;
 Input.downPos = new Vector();
 Input.pointerIDs = []; // TODO: Check if there's still bug in multitouch zoom
 Input.lastDist = 0;
-var EVENT;
-(function (EVENT) {
-    EVENT[EVENT["resize"] = 0] = "resize";
-    EVENT[EVENT["pointerdown"] = 1] = "pointerdown";
-    EVENT[EVENT["pointermove"] = 2] = "pointermove";
-    EVENT[EVENT["pointerup"] = 3] = "pointerup";
-    EVENT[EVENT["keydown"] = 4] = "keydown";
-    EVENT[EVENT["keyup"] = 5] = "keyup";
-    EVENT[EVENT["click"] = 6] = "click";
-    EVENT[EVENT["wheel"] = 7] = "wheel";
-    EVENT[EVENT["copy"] = 8] = "copy";
-    EVENT[EVENT["paste"] = 9] = "paste";
-})(EVENT || (EVENT = {}));
+const EVENT = Enum([
+    "resize",
+    "pointerdown",
+    "pointermove",
+    "pointerup",
+    "keydown",
+    "keyup",
+    "click",
+    "wheel",
+    "copy",
+    "paste",
+]);
 const KEY = {
     space: "Space",
     up: "ArrowUp",

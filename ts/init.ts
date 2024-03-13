@@ -45,6 +45,13 @@ if (menu) App.menu = menu;
 App.updateMenu();
 
 frame(0);
+
+function intro() {
+  App.placeFromUnstaged();
+  if (App.unstaged.nodes.length > 0) setTimeout(intro, 1000)
+}
+intro()
+
 window.addEventListener(
   EVENT.resize as unknown as keyof WindowEventMap,
   Screen.resizeHandler as EventListenerOrEventListenerObject

@@ -9,9 +9,8 @@ class Screen {
   static bigger: number;
   static updateSize() {
     Screen.size = new Vector(window.innerWidth, window.innerHeight);
-    // TODO: move canvas to App
-    // canvas.width = Screen.size.x;
-    // canvas.height = Screen.size.y;
+    App.canvas.width = Screen.size.x;
+    App.canvas.height = Screen.size.y;
     Screen.center = Screen.size.scale(0.5);
     // ctx.imageSmoothingEnabled = false;
     // ctx.font = "15px sans-serif"

@@ -24,6 +24,8 @@ class App {
 
   static menu: Element;
 
+  static canvas: HTMLCanvasElement;
+
   static placeFromUnstaged() {
     const nextNode: Node | undefined = App.unstaged.nodes.shift();
     if (nextNode) {
@@ -63,15 +65,13 @@ class App {
         Graph.select(Graph.hovered);
         Graph.hovered = null;
         Graph.selectedOriginalPos.setFrom(Graph.selected!.pos);
-        // TODO: get canvas from App
-        // canvas.classList.add("dragging")
+        App.canvas.classList.add("dragging")
       } else {
         if (Graph.selected) {
           Graph.selected.color = "orange";
           Graph.selected = null;
         }
-        // TODO: get canvas from App
-        // canvas.classList.add("moving")
+        App.canvas.classList.add("moving")
       }
     }
     if (Input.downState) {
@@ -83,15 +83,13 @@ class App {
       }
     } else {
       if (Graph.hovered) {
-        // TODO: get canvas from App
-        // if (!canvas.classList.contains("hovering")) {
-        //     canvas.classList.add("hovering")
-        // }
+        if (!App.canvas.classList.contains("hovering")) {
+            App.canvas.classList.add("hovering")
+        }
       } else {
-        // TODO: get canvas from App
-        // if (canvas.classList.contains("hovering")) {
-        //     canvas.classList.remove("hovering")
-        // }
+        if (App.canvas.classList.contains("hovering")) {
+            App.canvas.classList.remove("hovering")
+        }
       }
     }
   }
@@ -99,12 +97,10 @@ class App {
   static applyShift() {
     if (Graph.selected) {
       Graph.deselect();
-      // TODO: get canvas from App
-      // canvas.classList.remove("dragging")
+      App.canvas.classList.remove("dragging")
     } else {
       Camera.applyShift();
-      // TODO: get canvas from App
-      // canvas.classList.remove("moving")
+      App.canvas.classList.remove("moving")
     }
   }
 

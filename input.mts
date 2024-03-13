@@ -3,6 +3,7 @@ import { Camera } from "./camera.mjs";
 import { frame, render } from "./frame.mjs";
 import { Graph } from "./graph.mjs";
 import { Vector } from "./vector.mjs";
+import { Enum } from "./utils.mjs";
 
 type PointerID = { id: number; pos: Vector };
 class Input {
@@ -133,18 +134,18 @@ class Input {
   }
 }
 
-enum EVENT {
-  resize,
-  pointerdown,
-  pointermove,
-  pointerup,
-  keydown,
-  keyup,
-  click,
-  wheel,
-  copy,
-  paste,
-}
+const EVENT = Enum([
+  "resize",
+  "pointerdown",
+  "pointermove",
+  "pointerup",
+  "keydown",
+  "keyup",
+  "click",
+  "wheel",
+  "copy",
+  "paste",
+])
 
 const KEY = {
   space: "Space",

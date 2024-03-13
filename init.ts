@@ -1,17 +1,18 @@
-import { assert } from "utils.mjs";
-import { Ctx } from "ctx.mjs";
-import { Screen } from "screen.mjs";
-import { Camera } from "camera.mjs";
-import { Graph } from "graph.mjs";
-import { App } from "app.mjs";
-import { frame } from "frame.mjs";
-import { Input, EVENT } from "input.mjs";
+import { App } from "./app.mjs";
+import { assert } from "./utils.mjs";
+import { Camera } from "./camera.mjs";
+import { Ctx } from "./ctx.mjs";
+import { frame } from "./frame.mjs";
+import { Graph } from "./graph.mjs";
+import { Input, EVENT } from "./input.mjs";
+import { Screen } from "./screen.mjs";
 
-const canvas: HTMLCanvasElement | null = document.querySelector("#Canvas");
+const canvas: HTMLCanvasElement | null = document.querySelector("#Canvas")
 if (canvas === null) {
-  assert(false, "Can't find canvas");
+    assert(false, "Can't find canvas");
 } else {
-  const ctx = canvas.getContext("2d", { alpha: false });
+  App.canvas = canvas;
+  const ctx = App.canvas.getContext("2d", { alpha: false });
   if (ctx !== null) Ctx.ctx = ctx;
 }
 const menu = document.querySelector("#side-menu");
@@ -44,16 +45,15 @@ if (menu) App.menu = menu;
 App.updateMenu();
 
 frame(0);
-
 window.addEventListener(
   EVENT.resize as unknown as keyof WindowEventMap,
   Screen.resizeHandler as EventListenerOrEventListenerObject
 );
-canvas?.addEventListener(
+App.canvas.addEventListener(
   EVENT.pointerdown as unknown as keyof ElementEventMap,
   Input.pointerdownHandler as EventListenerOrEventListenerObject
 );
-canvas?.addEventListener(
+App.canvas.addEventListener(
   EVENT.pointermove as unknown as keyof ElementEventMap,
   Input.pointermoveHandler as EventListenerOrEventListenerObject
 );

@@ -1,4 +1,4 @@
-import { Vector } from "vector.mjs";
+import { Vector } from "./vector.mjs";
 declare class Screen {
     static size: Vector;
     static center: Vector;

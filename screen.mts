@@ -1,7 +1,7 @@
-import { Vector } from "vector.mjs";
-import { Ctx } from "ctx.mjs";
-import { App } from "app.mjs";
-import { render } from "frame.mjs";
+import { App } from "./app.mjs";
+import { Ctx } from "./ctx.mjs";
+import { render } from "./frame.mjs";
+import { Vector } from "./vector.mjs";
 class Screen {
   static size: Vector;
   static center: Vector;

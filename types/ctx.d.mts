@@ -1,4 +1,4 @@
-import type { Vector } from "vector.mjs";
+import type { Vector } from "./vector.mjs";
 declare class Ctx {
     static ctx: CanvasRenderingContext2D;
     static fillStyle(style: string): void;

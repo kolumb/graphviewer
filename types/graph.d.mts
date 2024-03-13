@@ -1,6 +1,6 @@
-import { Edge } from "edge.mjs";
-import { Node } from "node.mjs";
-import { Vector } from "vector.mjs";
+import { Edge } from "./edge.mjs";
+import { Node } from "./node.mjs";
+import { Vector } from "./vector.mjs";
 declare class Graph {
     static nodes: Node[];
     static edges: Edge[];

@@ -1,8 +1,8 @@
-import { App } from "app.mjs";
-import { assert, Enum } from "utils.mjs";
-import { Edge } from "edge.mjs";
-import { Node } from "node.mjs";
-import { Vector } from "vector.mjs";
+import { App } from "./app.mjs";
+import { assert, Enum } from "./utils.mjs";
+import { Edge } from "./edge.mjs";
+import { Node } from "./node.mjs";
+import { Vector } from "./vector.mjs";
 
 enum ConnectionTypes {
   undefined,

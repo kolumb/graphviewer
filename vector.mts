@@ -1,4 +1,4 @@
-import { Ctx } from "ctx.mjs";
+import { Ctx } from "./ctx.mjs";
 class Vector {
   x: number;
   y: number;

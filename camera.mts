@@ -1,6 +1,6 @@
-import { Vector } from "vector.mjs";
-import { Input } from "input.mjs";
-import { App } from "app.mjs";
+import { App } from "./app.mjs";
+import { Input } from "./input.mjs";
+import { Vector } from "./vector.mjs";
 class Camera {
   static pos = new Vector();
   static shift = new Vector();

@@ -11,5 +11,6 @@ declare class Node {
     checkCollision(pos: Vector): boolean;
     update(lag: number): void;
     render(): void;
+    renderPrevious(pos: Vector): void;
 }
 export { Node };

@@ -28,6 +28,9 @@ class Graph {
     Graph.edges.forEach((edge) => edge.update(lag));
   }
   static render() {
+    if (Graph.selected) {
+      Graph.selected.renderPrevious(Graph.selectedOriginalPos)
+    }
     Graph.edges.forEach((edge) => edge.render());
     Graph.nodes.forEach((node) => node.render());
   }

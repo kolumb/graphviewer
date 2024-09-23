@@ -57,6 +57,19 @@ class Node {
         }
         Ctx.restore();
     }
+    renderPrevious(pos) {
+        Ctx.save();
+        Ctx.translate(pos);
+        Ctx.beginPath();
+        Ctx.ellipse(Vector.zero, new Vector(this.textWidth / 2 + 10, Node.height), 0, 0, Math.PI * 2, true);
+        Ctx.fillStyle("#eee");
+        Ctx.fill();
+        Ctx.strokeStyle("#ddd");
+        Ctx.stroke();
+        Ctx.fillStyle("#999");
+        Ctx.fillText(this.label, new Vector(0, 3));
+        Ctx.restore();
+    }
 }
 Node.idCounter = 0;
 Node.height = 15;

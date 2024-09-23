@@ -80,8 +80,13 @@ class App {
         }
         if (Input.downState) {
             if (Graph.selected) {
-                Graph.selected.pos.setFrom(App.cursor.add(Graph.selectedShift));
                 App.potentialConnectionToggle = Graph.hovered !== null;
+                if (App.potentialConnectionToggle) {
+                    Graph.selected.pos.setFrom(Graph.selectedOriginalPos);
+                }
+                else {
+                    Graph.selected.pos.setFrom(App.cursor.add(Graph.selectedShift));
+                }
             }
             else {
                 Camera.updateShift();

@@ -116,7 +116,7 @@ class Input {
 
   static wheelHandler(e: WheelEvent) {
     if (App.pause) return;
-    Input.zoom += e.deltaY;
+    Input.zoom -= e.deltaY;
     Camera.updateScale();
   }
 

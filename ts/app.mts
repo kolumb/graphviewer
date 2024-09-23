@@ -29,7 +29,30 @@ class App {
   static placeFromUnstaged() {
     const nextNode: Node | undefined = App.unstaged.nodes.shift();
     if (nextNode) {
-      nextNode.pos.setFrom(Graph.getCenterOfMass().add(Vector.random()));
+      const origin = Graph.getCenterOfMass()
+      let angle = 0
+      let length = 30
+      let enlargeningSpeed = 6
+      let shrinkingSpeed = 0.986
+      let turningSpeed = Math.PI * 2 * 137.508 / 360
+      let pos = new Vector()
+      for (let i = 0; i < 1000; i++) {
+        pos = origin.add(Vector.fromAngle(angle).scale(length))
+        const minDist = Graph.nodes.reduce((minDist, node) => {
+          const dist = node.pos.dist(pos)
+          return Math.min(minDist, dist)
+        }, Infinity)
+        if (minDist > Node.height * 3) {
+          // nextNode.label = String(i)
+          break
+        } else {
+          angle += turningSpeed
+          length += enlargeningSpeed
+          enlargeningSpeed *= shrinkingSpeed
+          shrinkingSpeed *= 1.00008
+        }
+      }
+      nextNode.pos.setFrom(pos);
       Graph.nodes.push(nextNode);
       const nextEdges = App.unstaged.edges.filter(
         (e) => e.node1.id === nextNode.id || e.node2.id === nextNode.id
